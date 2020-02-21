@@ -27,7 +27,12 @@ public class SliderActivity extends AppCompatActivity {
         setContentView(R.layout.activity_slider);
 
         viewPager =  findViewById(R.id.viewPager);
-
+        // Disable clip to padding
+        viewPager.setClipToPadding(false);
+        // set padding manually, the more you set the padding the more you see of prev & next page
+        viewPager.setPadding(40, 0, 40, 0);
+        // sets a margin b/w individual pages to ensure that there is a gap b/w them
+        viewPager.setPageMargin(20);
         sliderDotspanel =  findViewById(R.id.SliderDots);
 
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this);
