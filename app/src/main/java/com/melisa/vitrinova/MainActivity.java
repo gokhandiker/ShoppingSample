@@ -9,10 +9,14 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.melisa.vitrinova.model.Categories;
+import com.melisa.vitrinova.model.Collections;
 import com.melisa.vitrinova.model.Deneme;
+import com.melisa.vitrinova.model.EditorShops;
 import com.melisa.vitrinova.model.Featured;
 import com.melisa.vitrinova.model.FeaturedType;
 import com.melisa.vitrinova.model.NewProducts;
+import com.melisa.vitrinova.model.NewShops;
 import com.melisa.vitrinova.retrofit.APIService;
 import com.melisa.vitrinova.retrofit.APIUrl;
 
@@ -62,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
                 try {
 
                      array = new JSONArray(response.body().string());
-                     product = array.getJSONObject(1);
+                     product = array.getJSONObject(5);
 
 
                         Log.e("onResponse",""+product.toString());
@@ -73,13 +77,30 @@ public class MainActivity extends AppCompatActivity {
 
 
                      Gson gson = new Gson();
-                NewProducts deneme = gson.fromJson(product.toString(), NewProducts.class);
-                Log.e("onResponse:gson",deneme.getProducts().size()+"");
+                NewShops deneme = gson.fromJson(product.toString(), NewShops.class);
+                Log.e("onResponse:gson",deneme.getShops().size()+"");
 
 
 
 
                 /**
+                 *
+                 *         NewShops deneme = gson.fromJson(product.toString(), NewShops.class);
+                 *                 Log.e("onResponse:gson",deneme.getShops().size()+"");
+                 *
+                 *                 
+                 * EditorShops deneme = gson.fromJson(product.toString(), EditorShops.class);
+                 *                 Log.e("onResponse:gson",deneme.getShops().size()+"");
+                 *
+                 *  Collections deneme = gson.fromJson(product.toString(), Collections.class);
+                 *                 Log.e("onResponse:gson",deneme.getCollections().size()+"");
+                 *
+                 *    Categories deneme = gson.fromJson(product.toString(), Categories.class);
+                 *                 Log.e("onResponse:gson",deneme.getCategories().size()+"");
+                 *
+                 *     NewProducts deneme = gson.fromJson(product.toString(), NewProducts.class);
+                 *                 Log.e("onResponse:gson",deneme.getProducts().size()+"");
+                 *
                  *      FeaturedType deneme = gson.fromJson(product.toString(), FeaturedType.class);
                  *                     Log.e("onResponse:gson",deneme.getFeatured().size()+"");
                  *
