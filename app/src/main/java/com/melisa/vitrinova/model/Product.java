@@ -1,35 +1,53 @@
 package com.melisa.vitrinova.model;
 
+import com.google.gson.annotations.SerializedName;
+
+
 import java.util.List;
 
-public class Products {
+public class Product {
     private Integer id;
     private Object code;
     private String title;
     private String slug;
     private String definition;
+    @SerializedName("old_price")
     private Integer oldPrice;
     private Integer price;
     private Integer stock;
+    @SerializedName("max_installment")
     private Object maxInstallment;
+    @SerializedName("commission_rate")
     private Integer commissionRate;
+    @SerializedName("cargo_time")
     private Integer cargoTime;
+    @SerializedName("is_cargo_free")
     private Boolean isCargoFree;
+    @SerializedName("is_new")
     private Boolean isNew;
+    @SerializedName("reject_reason")
     private Object rejectReason;
+    @SerializedName("category_id")
     private Integer categoryId;
     private String difference;
+    @SerializedName("is_editor_choice")
     private Boolean isEditorChoice;
+    @SerializedName("comment_count")
     private Integer commentCount;
+    @SerializedName("is_owner")
     private Boolean isOwner;
+    @SerializedName("is_approved")
     private Boolean isApproved;
+    @SerializedName("is_active")
     private Boolean isActive;
+    @SerializedName("share_url")
     private String shareUrl;
+    @SerializedName("is_liked")
     private Boolean isLiked;
+    @SerializedName("like_count")
     private Integer likeCount;
-    private Shop shop;
     private Category category;
-    private List<Image> images = null;
+    private List<Cover> images = null;
 
     public Integer getId() {
         return id;
@@ -119,20 +137,20 @@ public class Products {
         this.cargoTime = cargoTime;
     }
 
-    public Boolean getIsCargoFree() {
+    public Boolean getCargoFree() {
         return isCargoFree;
     }
 
-    public void setIsCargoFree(Boolean isCargoFree) {
-        this.isCargoFree = isCargoFree;
+    public void setCargoFree(Boolean cargoFree) {
+        isCargoFree = cargoFree;
     }
 
-    public Boolean getIsNew() {
+    public Boolean getNew() {
         return isNew;
     }
 
-    public void setIsNew(Boolean isNew) {
-        this.isNew = isNew;
+    public void setNew(Boolean aNew) {
+        isNew = aNew;
     }
 
     public Object getRejectReason() {
@@ -159,12 +177,12 @@ public class Products {
         this.difference = difference;
     }
 
-    public Boolean getIsEditorChoice() {
+    public Boolean getEditorChoice() {
         return isEditorChoice;
     }
 
-    public void setIsEditorChoice(Boolean isEditorChoice) {
-        this.isEditorChoice = isEditorChoice;
+    public void setEditorChoice(Boolean editorChoice) {
+        isEditorChoice = editorChoice;
     }
 
     public Integer getCommentCount() {
@@ -175,28 +193,28 @@ public class Products {
         this.commentCount = commentCount;
     }
 
-    public Boolean getIsOwner() {
+    public Boolean getOwner() {
         return isOwner;
     }
 
-    public void setIsOwner(Boolean isOwner) {
-        this.isOwner = isOwner;
+    public void setOwner(Boolean owner) {
+        isOwner = owner;
     }
 
-    public Boolean getIsApproved() {
+    public Boolean getApproved() {
         return isApproved;
     }
 
-    public void setIsApproved(Boolean isApproved) {
-        this.isApproved = isApproved;
+    public void setApproved(Boolean approved) {
+        isApproved = approved;
     }
 
-    public Boolean getIsActive() {
+    public Boolean getActive() {
         return isActive;
     }
 
-    public void setIsActive(Boolean isActive) {
-        this.isActive = isActive;
+    public void setActive(Boolean active) {
+        isActive = active;
     }
 
     public String getShareUrl() {
@@ -207,12 +225,12 @@ public class Products {
         this.shareUrl = shareUrl;
     }
 
-    public Boolean getIsLiked() {
+    public Boolean getLiked() {
         return isLiked;
     }
 
-    public void setIsLiked(Boolean isLiked) {
-        this.isLiked = isLiked;
+    public void setLiked(Boolean liked) {
+        isLiked = liked;
     }
 
     public Integer getLikeCount() {
@@ -223,14 +241,6 @@ public class Products {
         this.likeCount = likeCount;
     }
 
-    public Shop getShop() {
-        return shop;
-    }
-
-    public void setShop(Shop shop) {
-        this.shop = shop;
-    }
-
     public Category getCategory() {
         return category;
     }
@@ -239,11 +249,11 @@ public class Products {
         this.category = category;
     }
 
-    public List<Image> getImages() {
+    public List<Cover> getImages() {
         return images;
     }
 
-    public void setImages(List<Image> images) {
+    public void setImages(List<Cover> images) {
         this.images = images;
     }
 }

@@ -6,34 +6,24 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.melisa.vitrinova.model.Categories;
-import com.melisa.vitrinova.model.Collections;
-import com.melisa.vitrinova.model.Deneme;
-import com.melisa.vitrinova.model.EditorShops;
-import com.melisa.vitrinova.model.Featured;
+import com.melisa.vitrinova.model.CategoriesType;
+import com.melisa.vitrinova.model.CollectionsType;
+import com.melisa.vitrinova.model.EditorShopsType;
 import com.melisa.vitrinova.model.FeaturedType;
-import com.melisa.vitrinova.model.NewProducts;
-import com.melisa.vitrinova.model.NewShops;
-import com.melisa.vitrinova.retrofit.APIService;
-import com.melisa.vitrinova.retrofit.APIUrl;
+import com.melisa.vitrinova.model.NewProductsType;
+import com.melisa.vitrinova.model.NewShopsType;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -61,50 +51,37 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                JSONObject product = null;
+                JSONObject featured = null;
+                JSONObject products = null;
+                JSONObject categories = null;
+                JSONObject collections = null;
+                JSONObject editorShops = null;
+                JSONObject newShops = null;
+                Gson gson = new Gson();
+
                 JSONArray array;
                 try {
 
                      array = new JSONArray(response.body().string());
-                     product = array.getJSONObject(5);
+                    featured = array.getJSONObject(0);
+                    products = array.getJSONObject(1);
+                    categories = array.getJSONObject(2);
+                    collections = array.getJSONObject(3);
+                    editorShops = array.getJSONObject(4);
+                    newShops = array.getJSONObject(5);
 
-
-                        Log.e("onResponse",""+product.toString());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
 
+                FeaturedType featuredType = gson.fromJson(featured.toString(),FeaturedType.class);
+                NewProductsType productsType = gson.fromJson(products.toString(), NewProductsType.class);
+                CategoriesType categoriesType = gson.fromJson(categories.toString(),CategoriesType.class);
+                CollectionsType collectionsType = gson.fromJson(collections.toString(),CollectionsType.class);
+                EditorShopsType editorShopsType = gson.fromJson(editorShops.toString(),EditorShopsType.class);
+                NewShopsType newShopsType = gson.fromJson(newShops.toString(),NewShopsType.class);
 
-                     Gson gson = new Gson();
-                NewShops deneme = gson.fromJson(product.toString(), NewShops.class);
-                Log.e("onResponse:gson",deneme.getShops().size()+"");
-
-
-
-
-                /**
-                 *
-                 *         NewShops deneme = gson.fromJson(product.toString(), NewShops.class);
-                 *                 Log.e("onResponse:gson",deneme.getShops().size()+"");
-                 *
-                 *                 
-                 * EditorShops deneme = gson.fromJson(product.toString(), EditorShops.class);
-                 *                 Log.e("onResponse:gson",deneme.getShops().size()+"");
-                 *
-                 *  Collections deneme = gson.fromJson(product.toString(), Collections.class);
-                 *                 Log.e("onResponse:gson",deneme.getCollections().size()+"");
-                 *
-                 *    Categories deneme = gson.fromJson(product.toString(), Categories.class);
-                 *                 Log.e("onResponse:gson",deneme.getCategories().size()+"");
-                 *
-                 *     NewProducts deneme = gson.fromJson(product.toString(), NewProducts.class);
-                 *                 Log.e("onResponse:gson",deneme.getProducts().size()+"");
-                 *
-                 *      FeaturedType deneme = gson.fromJson(product.toString(), FeaturedType.class);
-                 *                     Log.e("onResponse:gson",deneme.getFeatured().size()+"");
-                 *
-                 */
 
 
 

@@ -1,5 +1,7 @@
 package com.melisa.vitrinova.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Collection {
 
     private Integer id;
@@ -7,9 +9,10 @@ public class Collection {
     private String definition;
     private String start;
     private Object end;
+    @SerializedName("share_url")
     private String shareUrl;
-    private Image cover;
-    private Image logo;
+    private Cover cover;
+    private Cover logo;
 
     public Integer getId() {
         return id;
@@ -59,20 +62,19 @@ public class Collection {
         this.shareUrl = shareUrl;
     }
 
-    public Image getCover() {
+    public Cover getCover() {
         return cover;
     }
 
-    public void setCover(Image cover) {
+    public void setCover(Cover cover) {
         this.cover = cover;
     }
 
-    public Image getLogo() {
+    public Cover getLogo() {
         return logo;
     }
 
-    public void setLogo(Image logo) {
+    public void setLogo(Cover logo) {
         this.logo = logo;
     }
-
 }

@@ -1,19 +1,22 @@
 package com.melisa.vitrinova.model;
 
-import java.util.List;
+
+import com.google.gson.annotations.SerializedName;
+
 
 public class Featured {
     private Integer id;
     private String type;
-    private Image cover;
+    private Cover cover;
     private String title;
+    @SerializedName("sub_title")
     private String subTitle;
 
-    public Image getCover() {
+    public Cover getCover() {
         return cover;
     }
 
-    public void setCover(Image cover) {
+    public void setCover(Cover cover) {
         this.cover = cover;
     }
 
@@ -32,7 +35,6 @@ public class Featured {
     public void setType(String type) {
         this.type = type;
     }
-
 
 
     public String getTitle() {

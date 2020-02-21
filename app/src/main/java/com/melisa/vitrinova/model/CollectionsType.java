@@ -2,11 +2,9 @@ package com.melisa.vitrinova.model;
 
 import java.util.List;
 
-public class Collections extends Deneme{
+public class CollectionsType extends Type {
 
     private List<Collection> collections = null;
-
-
 
     public List<Collection> getCollections() {
         return collections;

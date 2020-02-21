@@ -1,7 +1,7 @@
 package com.melisa.vitrinova.model;
 
 
-public class Deneme {
+public class Type {
 
     private String type;
     private String title;

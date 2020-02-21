@@ -1,11 +1,16 @@
 package com.melisa.vitrinova.model;
 
+
+import com.google.gson.annotations.SerializedName;
+
 public class Category {
 
     private Integer id;
     private String name;
+    @SerializedName("parent_id")
     private Integer parentId;
     private Integer order;
+    @SerializedName("parent_category")
     private Category parentCategory;
 
     public Integer getId() {

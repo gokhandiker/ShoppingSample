@@ -1,17 +1,17 @@
 package com.melisa.vitrinova.model;
 
-import java.util.List;
 
-public class NewProducts extends Deneme{
+public class NewProducts extends Product {
 
-    private List<Object> products;
+    private Shop shop;
 
 
-    public List<Object> getProducts() {
-        return products;
+    public Shop getShop() {
+        return shop;
     }
 
-    public void setProducts(List<Object> products) {
-        this.products = products;
+    public void setShop(Shop shop) {
+        this.shop = shop;
     }
+
 }

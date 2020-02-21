@@ -4,8 +4,7 @@ public class Image {
     private Integer width;
     private Integer height;
     private String url;
-    private ImageSize medium;
-    private ImageSize thumbnail;
+
 
     public Integer getWidth() {
         return width;
@@ -31,20 +30,5 @@ public class Image {
         this.url = url;
     }
 
-    public ImageSize getMedium() {
-        return medium;
-    }
-
-    public void setMedium(ImageSize medium) {
-        this.medium = medium;
-    }
-
-    public ImageSize getThumbnail() {
-        return thumbnail;
-    }
-
-    public void setThumbnail(ImageSize thumbnail) {
-        this.thumbnail = thumbnail;
-    }
 
 }

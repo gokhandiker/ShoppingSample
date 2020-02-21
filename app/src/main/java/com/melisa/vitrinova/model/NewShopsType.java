@@ -1,9 +1,9 @@
 package com.melisa.vitrinova.model;
 
+
 import java.util.List;
 
-public class EditorShops extends Deneme{
-
+public class NewShopsType extends Type {
 
     private List<Shop> shops = null;
 

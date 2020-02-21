@@ -2,11 +2,9 @@ package com.melisa.vitrinova.model;
 
 import java.util.List;
 
-public class FeaturedType extends Deneme{
-
+public class FeaturedType extends Type {
 
     private List<Featured> featured = null;
-
 
     public List<Featured> getFeatured() {
         return featured;

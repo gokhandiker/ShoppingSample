@@ -1,24 +1,37 @@
 package com.melisa.vitrinova.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Shop {
 
     private Integer id;
     private String name;
     private String slug;
     private String definition;
+    @SerializedName("name_updateable")
     private Boolean nameUpdateable;
+    @SerializedName("vacation_mode")
     private Integer vacationMode;
+    @SerializedName("created_at")
     private String createdAt;
+    @SerializedName("shop_payment_id")
     private Integer shopPaymentId;
+    @SerializedName("product_count")
     private Integer productCount;
+    @SerializedName("shop_rate")
     private Integer shopRate;
+    @SerializedName("comment_count")
     private Integer commentCount;
+    @SerializedName("follower_count")
     private Integer followerCount;
+    @SerializedName("is_editor_choice")
     private Boolean isEditorChoice;
+    @SerializedName("is_following")
     private Boolean isFollowing;
-    private Image cover;
+    private Cover cover;
+    @SerializedName("share_url")
     private String shareUrl;
-    private Object logo;
+    private Cover logo;
 
 
     public Integer getId() {
@@ -117,27 +130,27 @@ public class Shop {
         this.followerCount = followerCount;
     }
 
-    public Boolean getIsEditorChoice() {
+    public Boolean getEditorChoice() {
         return isEditorChoice;
     }
 
-    public void setIsEditorChoice(Boolean isEditorChoice) {
-        this.isEditorChoice = isEditorChoice;
+    public void setEditorChoice(Boolean editorChoice) {
+        isEditorChoice = editorChoice;
     }
 
-    public Boolean getIsFollowing() {
+    public Boolean getFollowing() {
         return isFollowing;
     }
 
-    public void setIsFollowing(Boolean isFollowing) {
-        this.isFollowing = isFollowing;
+    public void setFollowing(Boolean following) {
+        isFollowing = following;
     }
 
-    public Image getCover() {
+    public Cover getCover() {
         return cover;
     }
 
-    public void setCover(Image cover) {
+    public void setCover(Cover cover) {
         this.cover = cover;
     }
 
@@ -149,11 +162,11 @@ public class Shop {
         this.shareUrl = shareUrl;
     }
 
-    public Object getLogo() {
+    public Cover getLogo() {
         return logo;
     }
 
-    public void setLogo(Object logo) {
+    public void setLogo(Cover logo) {
         this.logo = logo;
     }
 }
