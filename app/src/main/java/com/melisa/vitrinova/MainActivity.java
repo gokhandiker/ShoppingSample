@@ -2,10 +2,12 @@ package com.melisa.vitrinova;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.melisa.vitrinova.carousel.SliderActivity;
 import com.melisa.vitrinova.model.CategoriesType;
 import com.melisa.vitrinova.model.CollectionsType;
 import com.melisa.vitrinova.model.EditorShopsType;
@@ -35,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        startActivity(new Intent(this, SliderActivity.class));
         client = new OkHttpClient();
         getWebservice();
     }
