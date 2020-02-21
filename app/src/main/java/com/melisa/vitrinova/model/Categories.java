@@ -2,28 +2,11 @@ package com.melisa.vitrinova.model;
 
 import java.util.List;
 
-public class Categories {
-
-    private String type;
-    private String title;
-    private List<Category> categories = null;
+public class Categories extends Deneme{
 
 
-    public String getType() {
-        return type;
-    }
+    private List<Category> categories;
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
 
     public List<Category> getCategories() {
         return categories;

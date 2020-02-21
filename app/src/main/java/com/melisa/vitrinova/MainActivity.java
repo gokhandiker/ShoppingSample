@@ -10,13 +10,18 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.melisa.vitrinova.model.Deneme;
+import com.melisa.vitrinova.model.Featured;
+import com.melisa.vitrinova.model.FeaturedType;
+import com.melisa.vitrinova.model.NewProducts;
 import com.melisa.vitrinova.retrofit.APIService;
 import com.melisa.vitrinova.retrofit.APIUrl;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -52,15 +57,33 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-            Log.e("onResponse ",response.body().string());
+                JSONObject product = null;
+                JSONArray array;
                 try {
-                    JSONObject jsonObject = new JSONObject(response.body().string());
 
-                    Gson gson = new Gson();
-                    
+                     array = new JSONArray(response.body().string());
+                     product = array.getJSONObject(1);
+
+
+                        Log.e("onResponse",""+product.toString());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
+
+
+                     Gson gson = new Gson();
+                NewProducts deneme = gson.fromJson(product.toString(), NewProducts.class);
+                Log.e("onResponse:gson",deneme.getProducts().size()+"");
+
+
+
+
+                /**
+                 *      FeaturedType deneme = gson.fromJson(product.toString(), FeaturedType.class);
+                 *                     Log.e("onResponse:gson",deneme.getFeatured().size()+"");
+                 *
+                 */
 
 
 

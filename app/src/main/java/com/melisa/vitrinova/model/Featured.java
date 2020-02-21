@@ -5,9 +5,17 @@ import java.util.List;
 public class Featured {
     private Integer id;
     private String type;
-    private List<Image> cover;
+    private Image cover;
     private String title;
     private String subTitle;
+
+    public Image getCover() {
+        return cover;
+    }
+
+    public void setCover(Image cover) {
+        this.cover = cover;
+    }
 
     public Integer getId() {
         return id;
@@ -25,13 +33,7 @@ public class Featured {
         this.type = type;
     }
 
-    public List<Image> getCover() {
-        return cover;
-    }
 
-    public void setCover(List<Image> cover) {
-        this.cover = cover;
-    }
 
     public String getTitle() {
         return title;
