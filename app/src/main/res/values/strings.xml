@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Vitrinova</string>
     <string name="appbar_search">Ürün veya vitrin ara</string>
+    <string name="search_hint">Ürün veya vitrin ara</string>
 </resources>
