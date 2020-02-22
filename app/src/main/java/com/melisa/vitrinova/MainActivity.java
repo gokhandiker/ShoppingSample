@@ -2,6 +2,8 @@ package com.melisa.vitrinova;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 
@@ -28,6 +30,7 @@ import com.melisa.vitrinova.model.EditorShopsType;
 import com.melisa.vitrinova.model.FeaturedType;
 import com.melisa.vitrinova.model.NewProductsType;
 import com.melisa.vitrinova.model.NewShopsType;
+import com.melisa.vitrinova.newproducts.NewProductsAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -48,6 +51,20 @@ import okhttp3.Response;
 public class MainActivity extends AppCompatActivity {
 
 
+    private  FeaturedType featuredType;
+    private  NewProductsType newProductsType;
+    private  CategoriesType categoriesType;
+    private  CollectionsType collectionsType;
+    private  EditorShopsType editorShopsType;
+    private  NewShopsType newShopsType;
+
+    private RecyclerView newProductsRecycler;
+    private NewProductsAdapter newProductsAdapter;
+    private LinearLayoutManager HorizontalLayout;
+    private View ChildView;
+    private int RecyclerViewItemPosition;
+    private RecyclerView.LayoutManager RecyclerViewLayoutManager;
+
     private ViewPager viewPager;
     private LinearLayout sliderDotspanel;
     private int dotscount;
@@ -62,7 +79,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-
+        newProductsRecycler= findViewById(R.id.rv_featureds);
+        newProductsRecycler.setHasFixedSize(true);
+        RecyclerViewLayoutManager
+                = new LinearLayoutManager(
+                getApplicationContext());
+        newProductsRecycler.setLayoutManager(
+                RecyclerViewLayoutManager);
 
         // Get the SearchView and set the searchable configuration
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
@@ -93,20 +116,38 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
-            Log.e("ACTION_SEARCH",query);
+            Log.e("ACTION_SEARCH", query);
         }
         // startActivity(new Intent(this, SliderActivity.class));
         client = new OkHttpClient();
         getWebservice();
 
         initCarousel();
+
+    }
+
+    private void initNewProductsRecycler() {
+        newProductsAdapter = new NewProductsAdapter(newProductsType.getProducts(),this);
+        HorizontalLayout
+                = new LinearLayoutManager(
+                MainActivity.this,
+                LinearLayoutManager.HORIZONTAL,
+                false);
+        runOnUiThread(() -> {
+            newProductsRecycler.setLayoutManager(HorizontalLayout);
+            // Set adapter on recycler view
+            newProductsRecycler.setAdapter(newProductsAdapter);
+        });
+
+
+
     }
 
     private void initCarousel() {
-        viewPager =  findViewById(R.id.viewPager);
+        viewPager = findViewById(R.id.viewPager);
 
 
-        sliderDotspanel =  findViewById(R.id.SliderDots);
+        sliderDotspanel = findViewById(R.id.SliderDots);
 
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this);
         viewPager.setPageTransformer(true, new DepthPageTransformer());
@@ -116,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
         dotscount = viewPagerAdapter.getCount();
         dots = new ImageView[dotscount];
 
-        for(int i = 0; i < dotscount; i++){
+        for (int i = 0; i < dotscount; i++) {
 
             dots[i] = new ImageView(this);
             dots[i].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.nonactive_dot));
@@ -140,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
 
-                for(int i = 0; i< dotscount; i++){
+                for (int i = 0; i < dotscount; i++) {
                     dots[i].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.nonactive_dot));
                 }
 
@@ -198,14 +239,21 @@ public class MainActivity extends AppCompatActivity {
                 }
 
 
-                FeaturedType featuredType = gson.fromJson(featured.toString(), FeaturedType.class);
-                NewProductsType productsType = gson.fromJson(products.toString(), NewProductsType.class);
-                CategoriesType categoriesType = gson.fromJson(categories.toString(), CategoriesType.class);
-                CollectionsType collectionsType = gson.fromJson(collections.toString(), CollectionsType.class);
-                EditorShopsType editorShopsType = gson.fromJson(editorShops.toString(), EditorShopsType.class);
-                NewShopsType newShopsType = gson.fromJson(newShops.toString(), NewShopsType.class);
+                 featuredType = gson.fromJson(featured.toString(), FeaturedType.class);
+                 newProductsType = gson.fromJson(products.toString(), NewProductsType.class);
+                 categoriesType = gson.fromJson(categories.toString(), CategoriesType.class);
+                 collectionsType = gson.fromJson(collections.toString(), CollectionsType.class);
+                 editorShopsType = gson.fromJson(editorShops.toString(), EditorShopsType.class);
+                 newShopsType = gson.fromJson(newShops.toString(), NewShopsType.class);
 
 
+                  for (int i= 0;i<newProductsType.getProducts().size();i++){
+                                       Log.e("newProductsType",""+newProductsType.getProducts().get(i).getImages().get(0).getThumbnail().getUrl());
+                                   }
+
+
+
+                initNewProductsRecycler();
             }
         });
     }
