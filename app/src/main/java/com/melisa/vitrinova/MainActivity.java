@@ -24,6 +24,7 @@ import com.melisa.vitrinova.carousel.DepthPageTransformer;
 import com.melisa.vitrinova.carousel.SliderActivity;
 import com.melisa.vitrinova.carousel.ViewPagerAdapter;
 import com.melisa.vitrinova.carousel.ZoomOutPageTransformer;
+import com.melisa.vitrinova.category.CategoryAdapter;
 import com.melisa.vitrinova.model.CategoriesType;
 import com.melisa.vitrinova.model.CollectionsType;
 import com.melisa.vitrinova.model.EditorShopsType;
@@ -58,9 +59,10 @@ public class MainActivity extends AppCompatActivity {
     private  EditorShopsType editorShopsType;
     private  NewShopsType newShopsType;
 
-    private RecyclerView newProductsRecycler;
+    private RecyclerView newProductsRecycler,categoryRecycler;
     private NewProductsAdapter newProductsAdapter;
-    private LinearLayoutManager HorizontalLayout;
+    private CategoryAdapter categoryAdapter;
+    private LinearLayoutManager HorizontalLayoutNewProduct,HorizontalLayoutCategory;
     private View ChildView;
     private int RecyclerViewItemPosition;
     private RecyclerView.LayoutManager RecyclerViewLayoutManager;
@@ -80,13 +82,27 @@ public class MainActivity extends AppCompatActivity {
 
 
         newProductsRecycler= findViewById(R.id.rv_featureds);
-        newProductsRecycler.setHasFixedSize(true);
-        RecyclerViewLayoutManager
-                = new LinearLayoutManager(
-                getApplicationContext());
-        newProductsRecycler.setLayoutManager(
-                RecyclerViewLayoutManager);
+        categoryRecycler= findViewById(R.id.rv_category);
 
+        newProductsRecycler.setHasFixedSize(true);
+        categoryRecycler.setHasFixedSize(true);
+
+        RecyclerViewLayoutManager= new LinearLayoutManager(getApplicationContext());
+        newProductsRecycler.setLayoutManager(RecyclerViewLayoutManager);
+        RecyclerViewLayoutManager= new LinearLayoutManager(getApplicationContext());
+        categoryRecycler.setLayoutManager(RecyclerViewLayoutManager);
+
+
+
+
+
+        initSearchView();
+        getWebservice();
+        initCarousel();
+
+    }
+
+    private void initSearchView() {
         // Get the SearchView and set the searchable configuration
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = findViewById(R.id.search_view);
@@ -112,29 +128,24 @@ public class MainActivity extends AppCompatActivity {
             searchPlate.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
 
         }
+
         // Get the intent, verify the action and get the query
         Intent intent = getIntent();
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
             Log.e("ACTION_SEARCH", query);
         }
-        // startActivity(new Intent(this, SliderActivity.class));
-        client = new OkHttpClient();
-        getWebservice();
-
-        initCarousel();
-
     }
 
     private void initNewProductsRecycler() {
         newProductsAdapter = new NewProductsAdapter(newProductsType.getProducts(),this);
-        HorizontalLayout
+        HorizontalLayoutNewProduct
                 = new LinearLayoutManager(
                 MainActivity.this,
                 LinearLayoutManager.HORIZONTAL,
                 false);
         runOnUiThread(() -> {
-            newProductsRecycler.setLayoutManager(HorizontalLayout);
+            newProductsRecycler.setLayoutManager(HorizontalLayoutNewProduct);
             // Set adapter on recycler view
             newProductsRecycler.setAdapter(newProductsAdapter);
 
@@ -143,6 +154,22 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+    private void initCategoryRecycler() {
+        categoryAdapter = new CategoryAdapter(categoriesType.getCategories(),this);
+        HorizontalLayoutCategory = new LinearLayoutManager(MainActivity.this,LinearLayoutManager.HORIZONTAL,false);
+        runOnUiThread(() -> {
+            categoryRecycler.setLayoutManager(HorizontalLayoutCategory);
+            // Set adapter on recycler view
+            categoryRecycler.setAdapter(categoryAdapter);
+
+        });
+
+
+
+    }
+
+
 
     private void initCarousel() {
         viewPager = findViewById(R.id.viewPager);
@@ -207,6 +234,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getWebservice() {
+        client = new OkHttpClient();
         final Request request = new Request.Builder().url("https://www.vitrinova.com/api/v2/discover").build();
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -255,6 +283,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                 initNewProductsRecycler();
+                  initCategoryRecycler();
             }
         });
     }

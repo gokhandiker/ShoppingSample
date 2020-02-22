@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.melisa.vitrinova.R;
 import com.melisa.vitrinova.model.NewProducts;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
