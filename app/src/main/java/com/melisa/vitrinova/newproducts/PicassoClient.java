@@ -12,7 +12,7 @@ public class PicassoClient {
     {
         if(url != null && url.length()>0)
         {
-            Picasso.with(c).load(url).resize(150, 140).centerCrop().noFade().into(img);
+            Picasso.with(c).load(url).noFade().into(img);
         }else {
             Picasso.with(c).load(R.drawable.placeholder).into(img);
         }

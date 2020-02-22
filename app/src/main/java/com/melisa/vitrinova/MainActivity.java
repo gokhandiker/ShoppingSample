@@ -25,6 +25,7 @@ import com.melisa.vitrinova.carousel.SliderActivity;
 import com.melisa.vitrinova.carousel.ViewPagerAdapter;
 import com.melisa.vitrinova.carousel.ZoomOutPageTransformer;
 import com.melisa.vitrinova.category.CategoryAdapter;
+import com.melisa.vitrinova.collections.CollectionsAdapter;
 import com.melisa.vitrinova.model.CategoriesType;
 import com.melisa.vitrinova.model.CollectionsType;
 import com.melisa.vitrinova.model.EditorShopsType;
@@ -59,10 +60,11 @@ public class MainActivity extends AppCompatActivity {
     private  EditorShopsType editorShopsType;
     private  NewShopsType newShopsType;
 
-    private RecyclerView newProductsRecycler,categoryRecycler;
+    private RecyclerView newProductsRecycler,categoryRecycler,collectionsRecycler;
     private NewProductsAdapter newProductsAdapter;
     private CategoryAdapter categoryAdapter;
-    private LinearLayoutManager HorizontalLayoutNewProduct,HorizontalLayoutCategory;
+    private CollectionsAdapter collectionsAdapter;
+    private LinearLayoutManager HorizontalLayoutNewProduct,HorizontalLayoutCategory,HorizontalLayoutCollections;
     private View ChildView;
     private int RecyclerViewItemPosition;
     private RecyclerView.LayoutManager RecyclerViewLayoutManager;
@@ -83,14 +85,18 @@ public class MainActivity extends AppCompatActivity {
 
         newProductsRecycler= findViewById(R.id.rv_featureds);
         categoryRecycler= findViewById(R.id.rv_category);
+        collectionsRecycler= findViewById(R.id.rv_collections);
 
         newProductsRecycler.setHasFixedSize(true);
         categoryRecycler.setHasFixedSize(true);
+        collectionsRecycler.setHasFixedSize(true);
 
         RecyclerViewLayoutManager= new LinearLayoutManager(getApplicationContext());
         newProductsRecycler.setLayoutManager(RecyclerViewLayoutManager);
         RecyclerViewLayoutManager= new LinearLayoutManager(getApplicationContext());
         categoryRecycler.setLayoutManager(RecyclerViewLayoutManager);
+        RecyclerViewLayoutManager= new LinearLayoutManager(getApplicationContext());
+        collectionsRecycler.setLayoutManager(RecyclerViewLayoutManager);
 
 
 
@@ -165,7 +171,17 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
+    }
 
+    private void initCollectionsRecycler() {
+        collectionsAdapter = new CollectionsAdapter(collectionsType.getCollections(),this);
+        HorizontalLayoutCollections = new LinearLayoutManager(MainActivity.this,LinearLayoutManager.HORIZONTAL,false);
+        runOnUiThread(() -> {
+            collectionsRecycler.setLayoutManager(HorizontalLayoutCollections);
+            // Set adapter on recycler view
+            collectionsRecycler.setAdapter(collectionsAdapter);
+
+        });
 
     }
 
@@ -284,7 +300,18 @@ public class MainActivity extends AppCompatActivity {
 
                 initNewProductsRecycler();
                   initCategoryRecycler();
+                  initCollectionsRecycler();
             }
         });
     }
 }
+
+
+// TODO: 22.02.2020 null kontrollerini yap
+// TODO: 22.02.2020 paket yapılarını mimariye uygun olarak düzenle
+// TODO: 22.02.2020 kodları kısaltmaya çalış
+// TODO: 22.02.2020 yeni ürünler ve koleksiyon gibi başlıkları model classtan çekip yazacaksın
+// TODO: 22.02.2020 data transferleri için eventbus kullan
+// TODO: 22.02.2020 gereksiz yorum satırlarını sil
+// TODO: 22.02.2020 mainactivitydeki kod kalabalığını önle
+// TODO: 22.02.2020  HorizontalLayoutNewProduct,HorizontalLayoutCategory,HorizontalLayoutCollections ayrı ayrı kullanmak gerekiyor mu araştır
