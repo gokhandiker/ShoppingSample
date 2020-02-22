@@ -137,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
             newProductsRecycler.setLayoutManager(HorizontalLayout);
             // Set adapter on recycler view
             newProductsRecycler.setAdapter(newProductsAdapter);
+
         });
 
 

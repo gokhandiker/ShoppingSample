@@ -13,7 +13,6 @@ public class PicassoClient {
         if(url != null && url.length()>0)
         {
             Picasso.with(c).load(url).into(img);
-
         }else {
             Picasso.with(c).load(R.drawable.slide1).into(img);
         }
