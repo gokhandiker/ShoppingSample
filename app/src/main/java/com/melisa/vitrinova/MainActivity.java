@@ -1,9 +1,7 @@
 package com.melisa.vitrinova;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
@@ -39,6 +37,7 @@ import com.melisa.vitrinova.model.NewProductsType;
 import com.melisa.vitrinova.model.NewShopsType;
 import com.melisa.vitrinova.newproducts.NewProductsAdapter;
 import com.melisa.vitrinova.newproducts.PicassoClient;
+import com.melisa.vitrinova.newshops.NewShopAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -66,12 +65,13 @@ public class MainActivity extends AppCompatActivity {
     private EditorShopsType editorShopsType;
     private NewShopsType newShopsType;
 
-    private RecyclerView newProductsRecycler, categoryRecycler, collectionsRecycler,editorShopsRecycler;
+    private RecyclerView newProductsRecycler, categoryRecycler, collectionsRecycler,editorShopsRecycler,newShopsRecycler;
     private NewProductsAdapter newProductsAdapter;
     private CategoryAdapter categoryAdapter;
     private CollectionsAdapter collectionsAdapter;
     private EditorShopAdapter editorShopAdapter;
-    private LinearLayoutManager HorizontalLayoutNewProduct, HorizontalLayoutCategory, HorizontalLayoutCollections,HorizontalLayoutEditorShop;
+    private NewShopAdapter newShopAdapter;
+    private LinearLayoutManager HorizontalLayoutNewProduct, HorizontalLayoutCategory, HorizontalLayoutCollections,HorizontalLayoutEditorShop,HorizontalLayoutNewShop;
     private View ChildView;
     private int RecyclerViewItemPosition;
     private RecyclerView.LayoutManager RecyclerViewLayoutManager;
@@ -96,11 +96,13 @@ public class MainActivity extends AppCompatActivity {
         categoryRecycler = findViewById(R.id.rv_category);
         collectionsRecycler = findViewById(R.id.rv_collections);
         editorShopsRecycler = findViewById(R.id.rv_editor_shops);
+        newShopsRecycler = findViewById(R.id.rv_new_shops);
 
         newProductsRecycler.setHasFixedSize(true);
         categoryRecycler.setHasFixedSize(true);
         collectionsRecycler.setHasFixedSize(true);
         editorShopsRecycler.setHasFixedSize(true);
+        newShopsRecycler.setHasFixedSize(true);
 
         RecyclerViewLayoutManager = new LinearLayoutManager(getApplicationContext());
         newProductsRecycler.setLayoutManager(RecyclerViewLayoutManager);
@@ -110,6 +112,8 @@ public class MainActivity extends AppCompatActivity {
         collectionsRecycler.setLayoutManager(RecyclerViewLayoutManager);
         RecyclerViewLayoutManager = new LinearLayoutManager(getApplicationContext());
         editorShopsRecycler.setLayoutManager(RecyclerViewLayoutManager);
+        RecyclerViewLayoutManager = new LinearLayoutManager(getApplicationContext());
+        newShopsRecycler.setLayoutManager(RecyclerViewLayoutManager);
 
 
         initSearchView();
@@ -221,6 +225,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    private void initNewShopsRecycler() {
+
+        newShopAdapter = new NewShopAdapter(newShopsType.getShops(), this);
+        HorizontalLayoutNewShop = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
+
+        newShopsRecycler.setLayoutManager(HorizontalLayoutNewShop);
+        newShopsRecycler.setAdapter(newShopAdapter);
+
+        final SnapHelper snapHelper = new LinearSnapHelper();
+        snapHelper.attachToRecyclerView(newShopsRecycler);
+    }
+
+
+
 
     public static void  setGrayScale(ImageView ımageView)
     {
@@ -328,6 +346,7 @@ public class MainActivity extends AppCompatActivity {
                     initCategoryRecycler();
                     initCollectionsRecycler();
                     initEditorShops();
+                    initNewShopsRecycler();
                 });
 
             }
