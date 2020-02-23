@@ -122,13 +122,13 @@
                     android:id="@+id/txt_new_products_all_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
                     android:text="TÜMÜ >"
                     android:textColor="@color/dark_gray"
                     android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/txt_new_products_title"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="@+id/txt_new_products_title" />
 
                 <TextView
                     android:id="@+id/txt_new_products_title"
@@ -184,13 +184,13 @@
                     android:id="@+id/textView4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
                     android:text="TÜMÜ >"
                     android:textColor="@color/dark_gray"
                     android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/txt_category_title"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="@+id/txt_category_title" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_category"
@@ -230,13 +230,13 @@
                     android:id="@+id/textView6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
                     android:text="TÜMÜ >"
                     android:textColor="@color/dark_gray"
                     android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/txt__main_collection_title"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="@+id/txt__main_collection_title" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_collections"
@@ -276,7 +276,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="10dp"
                     android:text="editor_shops"
                     android:textAllCaps="true"
                     android:textColor="@color/white"
@@ -288,13 +288,13 @@
                     android:id="@+id/textView8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
                     android:text="TÜMÜ>"
-                    android:textSize="12sp"
                     android:textColor="@color/white"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/txt_editor_shop_category_title"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="@+id/txt_editor_shop_category_title" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_editor_shops"
@@ -337,14 +337,14 @@
                     android:id="@+id/textView10"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
                     android:text="tümü>"
+                    android:textAllCaps="true"
                     android:textColor="@color/dark_gray"
                     android:textSize="12sp"
-                    android:textAllCaps="true"
+                    app:layout_constraintBottom_toBottomOf="@+id/txt_new_shops_category_title"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="@+id/txt_new_shops_category_title" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_new_shops"

@@ -361,6 +361,11 @@ public class MainActivity extends AppCompatActivity {
                 newShopsType = gson.fromJson(newShops.toString(), NewShopsType.class);
 
 
+                for (int i=0;i<editorShopsType.getShops().size();i++){
+                    Log.e("getName",editorShopsType.getShops().get(i).getName());
+                    Log.e("getDefinition",editorShopsType.getShops().get(i).getDefinition());
+                }
+
                 runOnUiThread(() -> {
                     initCarousel();
                     initNewProductsRecycler();

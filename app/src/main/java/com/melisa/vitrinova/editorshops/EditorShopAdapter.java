@@ -53,6 +53,10 @@ public class EditorShopAdapter extends RecyclerView.Adapter<EditorShopAdapter.Sh
             middlePopularProductImage = view.findViewById(R.id.img_editor_shop_middle);
             lastPopularProductImage = view.findViewById(R.id.img_editor_shop_last);
 
+            firstPopularProductImage.setClipToOutline(true);
+            middlePopularProductImage.setClipToOutline(true);
+            lastPopularProductImage.setClipToOutline(true);
+
             txtShopName = view.findViewById(R.id.txt_editor_shop_name);
             txtShopDefinition = view.findViewById(R.id.txt_editor_shop_definition);
 
@@ -93,7 +97,7 @@ public class EditorShopAdapter extends RecyclerView.Adapter<EditorShopAdapter.Sh
 
 
         holder.txtShopName.setText(editorShopList.get(position).getName());
-        holder.txtShopName.setText(editorShopList.get(position).getDefinition());
+        holder.txtShopDefinition.setText(editorShopList.get(position).getDefinition());
 
 
         setAnimation(holder.itemView, position);
