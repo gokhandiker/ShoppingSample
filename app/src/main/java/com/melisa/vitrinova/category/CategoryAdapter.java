@@ -27,6 +27,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         this.activity=activity;
     }
 
+
+
     public static class CategoryHolder
             extends RecyclerView.ViewHolder {
 

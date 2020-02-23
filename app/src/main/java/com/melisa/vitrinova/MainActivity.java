@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
         swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
         swipeRefreshLayout.setOnRefreshListener(() -> {
             Log.e("onRefresh","REFRESHIN");
-            getWebService();
+            refreshWebService();
         });
 
 
@@ -378,6 +378,71 @@ public class MainActivity extends AppCompatActivity {
                     initCollectionsRecycler();
                     initEditorShops();
                     initNewShopsRecycler();
+
+                    swipeRefreshLayout.setRefreshing(false);
+                });
+
+            }
+        });
+    }
+
+    private void refreshWebService() {
+        client = new OkHttpClient();
+        final Request request = new Request.Builder().url("https://www.vitrinova.com/api/v2/discover").build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e("onResponse ", e.getMessage());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                JSONObject featured = null;
+                JSONObject products = null;
+                JSONObject categories = null;
+                JSONObject collections = null;
+                JSONObject editorShops = null;
+                JSONObject newShops = null;
+                Gson gson = new Gson();
+
+                JSONArray array;
+                try {
+
+                    array = new JSONArray(response.body().string());
+                    featured = array.getJSONObject(0);
+                    products = array.getJSONObject(1);
+                    categories = array.getJSONObject(2);
+                    collections = array.getJSONObject(3);
+                    editorShops = array.getJSONObject(4);
+                    newShops = array.getJSONObject(5);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+                featuredType = gson.fromJson(featured.toString(), FeaturedType.class);
+                newProductsType = gson.fromJson(products.toString(), NewProductsType.class);
+                categoriesType = gson.fromJson(categories.toString(), CategoriesType.class);
+                collectionsType = gson.fromJson(collections.toString(), CollectionsType.class);
+                editorShopsType = gson.fromJson(editorShops.toString(), EditorShopsType.class);
+                newShopsType = gson.fromJson(newShops.toString(), NewShopsType.class);
+
+
+                for (int i=0;i<editorShopsType.getShops().size();i++){
+                    Log.e("getName",editorShopsType.getShops().get(i).getName());
+                    Log.e("getDefinition",editorShopsType.getShops().get(i).getDefinition());
+                }
+
+                runOnUiThread(() -> {
+
+
+
+                    categoryAdapter.notifyDataSetChanged();
+                    collectionsAdapter.notifyDataSetChanged();
+                    editorShopAdapter.notifyDataSetChanged();
+                    newShopAdapter.notifyDataSetChanged();
+                    newProductsAdapter.refresh();
 
                     swipeRefreshLayout.setRefreshing(false);
                 });

@@ -70,6 +70,10 @@ public class NewProductsAdapter extends RecyclerView.Adapter<NewProductsAdapter.
         return holder;
     }
 
+    public void refresh(){
+        this.notifyDataSetChanged();
+    }
+
     @Override
     public void onBindViewHolder(@NonNull ProductHolder holder, int position) {
 
