@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-
+            android:foreground="@drawable/category_overlay"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -33,7 +33,9 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:text="KADIN"
+            android:textAlignment="center"
             android:textColor="@color/white"
+            android:textSize="12sp"
             android:textStyle="bold"
             android:textAllCaps="true"
             app:layout_constraintBottom_toBottomOf="parent"

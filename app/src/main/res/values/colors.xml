@@ -5,7 +5,7 @@
     <color name="colorAccent">#D81B60</color>
     <color name="gray">#dddddd</color>
     <color name="white">#ffffff</color>
-    <color name="dark_gray">#444444</color>
+    <color name="dark_gray">#535353</color>
     <color name="light_gray">#9E9E9E</color>
     <color name="new_product_footer">#f5f5f5</color>
 </resources>

@@ -34,9 +34,11 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
 
-            android:drawablePadding="20dp"
+            android:layout_marginEnd="8dp"
+            android:gravity="left"
             android:ellipsize="end"
             android:maxLines="1"
+            android:singleLine="true"
             android:text="Göz Küpe"
             android:textColor="@color/dark_gray"
             android:textSize="13sp"
@@ -74,7 +76,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:text="28 TL"
-                android:textSize="14sp"
+                android:textSize="17sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -82,9 +84,10 @@
                 android:id="@+id/txt_old_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="8dp"
+                android:textColor="@color/light_gray"
                 android:text="34 TL"
-                android:textSize="11sp"
+                android:textSize="15sp"
                 app:layout_constraintBottom_toBottomOf="@+id/txt_price"
                 app:layout_constraintStart_toEndOf="@+id/txt_price"
                 app:layout_constraintTop_toTopOf="@+id/txt_price" />

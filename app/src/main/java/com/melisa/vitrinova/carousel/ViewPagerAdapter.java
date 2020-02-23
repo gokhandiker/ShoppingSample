@@ -49,7 +49,7 @@ public class ViewPagerAdapter  extends PagerAdapter {
         txtTitle.setText(featuredList.get(position).getTitle());
         txtSubTitle.setText(featuredList.get(position).getSubTitle());
 
-        PicassoClient.downloadImage(context,featuredList.get(position).getCover().getUrl(),featuredImage);
+        PicassoClient.downloadImage(context,featuredList.get(position).getCover().getMedium().getUrl(),featuredImage);
 
 
         ViewPager vp = (ViewPager) container;

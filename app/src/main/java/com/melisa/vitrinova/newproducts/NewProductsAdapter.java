@@ -1,6 +1,7 @@
 package com.melisa.vitrinova.newproducts;
 
 import android.app.Activity;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +50,7 @@ public class NewProductsAdapter extends RecyclerView.Adapter<NewProductsAdapter.
             txtShop = view.findViewById(R.id.txt_shop_name);
             txtPrice = view.findViewById(R.id.txt_price);
             txtOldPrice = view.findViewById(R.id.txt_old_price);
+            txtOldPrice.setPaintFlags(txtOldPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             productCard = view.findViewById(R.id.card_new_product);
         }
     }
@@ -78,8 +80,14 @@ public class NewProductsAdapter extends RecyclerView.Adapter<NewProductsAdapter.
 
         holder.txtTitle.setText(productList.get(position).getTitle());
         holder.txtShop.setText(productList.get(position).getShop().getName());
-        holder.txtPrice.setText(""+productList.get(position).getPrice());
-        holder.txtOldPrice.setText(""+productList.get(position).getOldPrice());
+        holder.txtPrice.setText(productList.get(position).getPrice()+" TL");
+
+        if (productList.get(position).getOldPrice() == null){
+            holder.txtOldPrice.setVisibility(View.INVISIBLE);
+        }else{
+            holder.txtOldPrice.setText(productList.get(position).getOldPrice()+" TL");
+        }
+
 
         setAnimation(holder.itemView, position);
     }

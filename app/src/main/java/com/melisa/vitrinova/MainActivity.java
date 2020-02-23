@@ -22,6 +22,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.melisa.vitrinova.carousel.DepthPageTransformer;
@@ -39,6 +40,7 @@ import com.melisa.vitrinova.newproducts.NewProductsAdapter;
 import com.melisa.vitrinova.newproducts.PicassoClient;
 import com.melisa.vitrinova.newshops.NewShopAdapter;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -88,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
 
         sliderDotspanel = findViewById(R.id.carousel_dots);
@@ -158,6 +161,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initNewProductsRecycler() {
+        TextView txtNewProducts = findViewById(R.id.txt_new_products_title);
+        TextView txtAllProducts = findViewById(R.id.txt_new_products_all_btn);
+        txtAllProducts.setOnClickListener(view -> {
+
+            EventBus.getDefault().postSticky(newProductsType);
+            startActivity(new Intent(MainActivity.this,CardSliderActivity.class));
+        });
+        txtNewProducts.setText(newProductsType.getTitle());
         newProductsAdapter = new NewProductsAdapter(newProductsType.getProducts(), this);
         HorizontalLayoutNewProduct
                 = new LinearLayoutManager(
@@ -173,17 +184,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initCategoryRecycler() {
+        TextView txtNewProducts = findViewById(R.id.txt_category_title);
+
+        txtNewProducts.setText(categoriesType.getTitle());
         categoryAdapter = new CategoryAdapter(categoriesType.getCategories(), this);
         HorizontalLayoutCategory = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
 
         categoryRecycler.setLayoutManager(HorizontalLayoutCategory);
-        // Set adapter on recycler view
         categoryRecycler.setAdapter(categoryAdapter);
 
 
     }
 
     private void initCollectionsRecycler() {
+        TextView txtNewProducts = findViewById(R.id.txt__main_collection_title);
+
+        txtNewProducts.setText(collectionsType.getTitle());
         collectionsAdapter = new CollectionsAdapter(collectionsType.getCollections(), this);
         HorizontalLayoutCollections = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
 
@@ -194,6 +210,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initEditorShops() {
+        TextView txtNewProducts = findViewById(R.id.txt_editor_shop_category_title);
+
+        txtNewProducts.setText(editorShopsType.getTitle());
         ImageView imgEditorShopsBg = findViewById(R.id.img_editor_shop_bg);
         setGrayScale(imgEditorShopsBg);
 
@@ -226,7 +245,9 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void initNewShopsRecycler() {
+        TextView txtNewProducts = findViewById(R.id.txt_new_shops_category_title);
 
+        txtNewProducts.setText(newShopsType.getTitle());
         newShopAdapter = new NewShopAdapter(newShopsType.getShops(), this);
         HorizontalLayoutNewShop = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
 
