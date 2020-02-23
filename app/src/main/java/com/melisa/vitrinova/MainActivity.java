@@ -1,9 +1,13 @@
 package com.melisa.vitrinova;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SnapHelper;
 import androidx.viewpager.widget.ViewPager;
 
 
@@ -11,6 +15,8 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -24,6 +30,7 @@ import com.melisa.vitrinova.carousel.DepthPageTransformer;
 import com.melisa.vitrinova.carousel.ViewPagerAdapter;
 import com.melisa.vitrinova.category.CategoryAdapter;
 import com.melisa.vitrinova.collections.CollectionsAdapter;
+import com.melisa.vitrinova.editorshops.EditorShopAdapter;
 import com.melisa.vitrinova.model.CategoriesType;
 import com.melisa.vitrinova.model.CollectionsType;
 import com.melisa.vitrinova.model.EditorShopsType;
@@ -31,6 +38,7 @@ import com.melisa.vitrinova.model.FeaturedType;
 import com.melisa.vitrinova.model.NewProductsType;
 import com.melisa.vitrinova.model.NewShopsType;
 import com.melisa.vitrinova.newproducts.NewProductsAdapter;
+import com.melisa.vitrinova.newproducts.PicassoClient;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -58,11 +66,12 @@ public class MainActivity extends AppCompatActivity {
     private EditorShopsType editorShopsType;
     private NewShopsType newShopsType;
 
-    private RecyclerView newProductsRecycler, categoryRecycler, collectionsRecycler;
+    private RecyclerView newProductsRecycler, categoryRecycler, collectionsRecycler,editorShopsRecycler;
     private NewProductsAdapter newProductsAdapter;
     private CategoryAdapter categoryAdapter;
     private CollectionsAdapter collectionsAdapter;
-    private LinearLayoutManager HorizontalLayoutNewProduct, HorizontalLayoutCategory, HorizontalLayoutCollections;
+    private EditorShopAdapter editorShopAdapter;
+    private LinearLayoutManager HorizontalLayoutNewProduct, HorizontalLayoutCategory, HorizontalLayoutCollections,HorizontalLayoutEditorShop;
     private View ChildView;
     private int RecyclerViewItemPosition;
     private RecyclerView.LayoutManager RecyclerViewLayoutManager;
@@ -86,10 +95,12 @@ public class MainActivity extends AppCompatActivity {
         newProductsRecycler = findViewById(R.id.rv_featureds);
         categoryRecycler = findViewById(R.id.rv_category);
         collectionsRecycler = findViewById(R.id.rv_collections);
+        editorShopsRecycler = findViewById(R.id.rv_editor_shops);
 
         newProductsRecycler.setHasFixedSize(true);
         categoryRecycler.setHasFixedSize(true);
         collectionsRecycler.setHasFixedSize(true);
+        editorShopsRecycler.setHasFixedSize(true);
 
         RecyclerViewLayoutManager = new LinearLayoutManager(getApplicationContext());
         newProductsRecycler.setLayoutManager(RecyclerViewLayoutManager);
@@ -97,10 +108,12 @@ public class MainActivity extends AppCompatActivity {
         categoryRecycler.setLayoutManager(RecyclerViewLayoutManager);
         RecyclerViewLayoutManager = new LinearLayoutManager(getApplicationContext());
         collectionsRecycler.setLayoutManager(RecyclerViewLayoutManager);
+        RecyclerViewLayoutManager = new LinearLayoutManager(getApplicationContext());
+        editorShopsRecycler.setLayoutManager(RecyclerViewLayoutManager);
 
 
         initSearchView();
-        getWebservice();
+        getWebService();
 
 
     }
@@ -176,6 +189,47 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void initEditorShops() {
+        ImageView imgEditorShopsBg = findViewById(R.id.img_editor_shop_bg);
+        setGrayScale(imgEditorShopsBg);
+
+        String backgroundImageUrl = editorShopsType.getShops().get(0).getCover().getMedium().getUrl();
+        PicassoClient.downloadImage(MainActivity.this,backgroundImageUrl,imgEditorShopsBg);
+
+        editorShopAdapter = new EditorShopAdapter(editorShopsType.getShops(), this);
+        HorizontalLayoutEditorShop = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
+
+        editorShopsRecycler.setLayoutManager(HorizontalLayoutEditorShop);
+        editorShopsRecycler.setAdapter(editorShopAdapter);
+
+        final SnapHelper snapHelper = new LinearSnapHelper();
+        snapHelper.attachToRecyclerView(editorShopsRecycler);
+        editorShopsRecycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if(newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    View centerView = snapHelper.findSnapView(HorizontalLayoutEditorShop);
+                    int position = HorizontalLayoutEditorShop.getPosition(centerView);
+                    String backgroundImageUrl = editorShopsType.getShops().get(position).getCover().getMedium().getUrl();
+                    PicassoClient.downloadImage(MainActivity.this,backgroundImageUrl,imgEditorShopsBg);
+                }
+            }
+        });
+
+    }
+
+
+
+    public static void  setGrayScale(ImageView ımageView)
+    {
+        ColorMatrix matrix = new ColorMatrix();
+        matrix.setSaturation(0);
+        ColorMatrixColorFilter filter = new ColorMatrixColorFilter(matrix);
+        ımageView.setColorFilter(filter);
+    }
+
 
     private void initCarousel() {
 
@@ -225,7 +279,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    private void getWebservice() {
+    private void getWebService() {
         client = new OkHttpClient();
         final Request request = new Request.Builder().url("https://www.vitrinova.com/api/v2/discover").build();
         client.newCall(request).enqueue(new Callback() {
@@ -268,16 +322,12 @@ public class MainActivity extends AppCompatActivity {
                 newShopsType = gson.fromJson(newShops.toString(), NewShopsType.class);
 
 
-                for (int i = 0; i < newProductsType.getProducts().size(); i++) {
-                    Log.e("newProductsType", "" + newProductsType.getProducts().get(i).getImages().get(0).getThumbnail().getUrl());
-                }
-
-
                 runOnUiThread(() -> {
                     initCarousel();
                     initNewProductsRecycler();
                     initCategoryRecycler();
                     initCollectionsRecycler();
+                    initEditorShops();
                 });
 
             }

@@ -61,7 +61,7 @@ public class NewProductsAdapter extends RecyclerView.Adapter<NewProductsAdapter.
 
         View itemView = LayoutInflater
                 .from(parent.getContext())
-                .inflate(R.layout.rv_featureds_item,
+                .inflate(R.layout.rv_new_product_item,
                         parent,
                         false);
         ProductHolder holder = new ProductHolder(itemView);
