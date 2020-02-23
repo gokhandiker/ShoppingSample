@@ -9,7 +9,6 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
@@ -27,7 +26,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             app:layout_scrollFlags="scroll|enterAlways"
-            android:layout_height="50dp"
+            android:layout_height="45dp"
             android:background="@drawable/bg_toolbar"
             app:contentInsetStart="0dp">
 
@@ -64,317 +63,324 @@
         </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_refresh_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <androidx.core.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+  <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
 
 
+      <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+          android:id="@+id/swipe_refresh_layout"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-
-                    tools:context=".MainActivity">
-
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/layout_carousel"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+          <androidx.core.widget.NestedScrollView
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 
-                        <androidx.viewpager.widget.ViewPager
-                            android:id="@+id/vp_carousel"
-                            android:layout_width="match_parent"
-                            android:layout_height="190dp"
-                            android:overScrollMode="never"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="1.0"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+              <androidx.constraintlayout.widget.ConstraintLayout
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
 
-                        <LinearLayout
-                            android:id="@+id/carousel_dots"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="20dp"
-                            android:gravity="center_vertical|center_horizontal"
-                            android:orientation="horizontal"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/constraintLayout2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/layout_carousel">
-
-                        <TextView
-                            android:id="@+id/txt_new_products_all_btn"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="8dp"
-                            android:text="TÜMÜ >"
-                            android:textColor="@color/dark_gray"
-                            android:textSize="12sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/txt_new_products_title"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/txt_new_products_title" />
-
-                        <TextView
-                            android:id="@+id/txt_new_products_title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
-                            android:layout_marginTop="8dp"
-                            android:text="new products"
-                            android:textAllCaps="true"
-                            android:textColor="@color/dark_gray"
-                            android:textSize="14sp"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/rv_featureds"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:clipToPadding="false"
-                            android:overScrollMode="never"
-                            android:paddingLeft="12dp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/txt_new_products_title" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/constraintLayout3"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/gray"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
-
-                        <TextView
-                            android:id="@+id/txt_category_title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
-                            android:layout_marginTop="8dp"
-                            android:text="category"
-                            android:textAllCaps="true"
-                            android:textColor="@color/dark_gray"
-                            android:textSize="14sp"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/textView4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="8dp"
-                            android:text="TÜMÜ >"
-                            android:textColor="@color/dark_gray"
-                            android:textSize="12sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/txt_category_title"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/txt_category_title" />
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/rv_category"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:clipToPadding="false"
-                            android:overScrollMode="never"
-                            android:paddingLeft="12dp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/txt_category_title" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/constraintLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/constraintLayout3">
-
-                        <TextView
-                            android:id="@+id/txt__main_collection_title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
-                            android:layout_marginTop="8dp"
-                            android:text="collection"
-                            android:textAllCaps="true"
-                            android:textColor="@color/dark_gray"
-                            android:textSize="14sp"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/textView6"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="8dp"
-                            android:text="TÜMÜ >"
-                            android:textColor="@color/dark_gray"
-                            android:textSize="12sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/txt__main_collection_title"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/txt__main_collection_title" />
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/rv_collections"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:clipToPadding="false"
-                            android:overScrollMode="never"
-                            android:paddingLeft="12dp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/txt__main_collection_title" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/constraintLayout4"
-                        android:layout_width="match_parent"
-
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+                  tools:context=".MainActivity">
 
 
-                        <ImageView
-                            android:id="@+id/img_editor_shop_bg"
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:foreground="@drawable/category_image_overlay"
-                            android:scaleType="centerCrop"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:srcCompat="@tools:sample/backgrounds/scenic" />
+                  <androidx.constraintlayout.widget.ConstraintLayout
+                      android:id="@+id/layout_carousel"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
 
-                        <TextView
-                            android:id="@+id/txt_editor_shop_category_title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
-                            android:layout_marginTop="10dp"
-                            android:text="editor_shops"
-                            android:textAllCaps="true"
-                            android:textColor="@color/white"
-                            android:textSize="14sp"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/textView8"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="8dp"
-                            android:text="TÜMÜ>"
-                            android:textColor="@color/white"
-                            android:textSize="12sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/txt_editor_shop_category_title"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/txt_editor_shop_category_title" />
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/rv_editor_shops"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="15dp"
-                            android:clipToPadding="false"
-                            android:overScrollMode="never"
-                            android:paddingLeft="12dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/txt_editor_shop_category_title" />
+                      app:layout_constraintEnd_toEndOf="parent"
+                      app:layout_constraintStart_toStartOf="parent"
+                      app:layout_constraintTop_toTopOf="parent">
 
 
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                      <androidx.viewpager.widget.ViewPager
+                          android:id="@+id/vp_carousel"
+                          android:layout_width="match_parent"
+                          android:layout_height="190dp"
+                          android:layout_marginTop="55dp"
+                          android:overScrollMode="never"
+                          app:layout_constraintEnd_toEndOf="parent"
+                          app:layout_constraintHorizontal_bias="1.0"
+                          app:layout_constraintStart_toStartOf="parent"
+                          app:layout_constraintTop_toTopOf="parent" />
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                      <LinearLayout
+                          android:id="@+id/carousel_dots"
+                          android:layout_width="0dp"
+                          android:layout_height="wrap_content"
+                          android:layout_marginBottom="20dp"
+                          android:gravity="center_vertical|center_horizontal"
+                          android:orientation="horizontal"
+                          app:layout_constraintBottom_toBottomOf="parent"
+                          app:layout_constraintEnd_toEndOf="parent"
+                          app:layout_constraintStart_toStartOf="parent" />
 
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/constraintLayout4">
+                  </androidx.constraintlayout.widget.ConstraintLayout>
 
-                        <TextView
-                            android:id="@+id/txt_new_shops_category_title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
-                            android:layout_marginTop="8dp"
-                            android:text="new_shops"
-                            android:textAllCaps="true"
-                            android:textColor="@color/dark_gray"
-                            android:textSize="14sp"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                  <androidx.constraintlayout.widget.ConstraintLayout
+                      android:id="@+id/constraintLayout2"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      app:layout_constraintEnd_toEndOf="parent"
+                      app:layout_constraintStart_toStartOf="parent"
+                      app:layout_constraintTop_toBottomOf="@+id/layout_carousel">
 
-                        <TextView
-                            android:id="@+id/textView10"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="8dp"
-                            android:text="tümü>"
-                            android:textAllCaps="true"
-                            android:textColor="@color/dark_gray"
-                            android:textSize="12sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/txt_new_shops_category_title"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/txt_new_shops_category_title" />
+                      <TextView
+                          android:id="@+id/txt_new_products_all_btn"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_marginEnd="8dp"
+                          android:text="TÜMÜ >"
+                          android:textColor="@color/dark_gray"
+                          android:textSize="12sp"
+                          app:layout_constraintBottom_toBottomOf="@+id/txt_new_products_title"
+                          app:layout_constraintEnd_toEndOf="parent"
+                          app:layout_constraintTop_toTopOf="@+id/txt_new_products_title" />
 
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/rv_new_shops"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginBottom="15dp"
-                            android:clipToPadding="false"
-                            android:overScrollMode="never"
-                            android:paddingLeft="12dp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/txt_new_shops_category_title" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                      <TextView
+                          android:id="@+id/txt_new_products_title"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_marginStart="12dp"
+                          android:layout_marginTop="8dp"
+                          android:text="new products"
+                          android:textAllCaps="true"
+                          android:textColor="@color/dark_gray"
+                          android:textSize="14sp"
+                          app:layout_constraintStart_toStartOf="parent"
+                          app:layout_constraintTop_toTopOf="parent" />
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                      <androidx.recyclerview.widget.RecyclerView
+                          android:id="@+id/rv_featureds"
+                          android:layout_width="0dp"
+                          android:layout_height="wrap_content"
+                          android:layout_marginTop="8dp"
+                          android:clipToPadding="false"
+                          android:overScrollMode="never"
+                          android:paddingLeft="12dp"
+                          app:layout_constraintEnd_toEndOf="parent"
+                          app:layout_constraintStart_toStartOf="parent"
+                          app:layout_constraintTop_toBottomOf="@+id/txt_new_products_title" />
+
+                  </androidx.constraintlayout.widget.ConstraintLayout>
+
+                  <androidx.constraintlayout.widget.ConstraintLayout
+                      android:id="@+id/constraintLayout3"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:background="@color/gray"
+                      app:layout_constraintEnd_toEndOf="parent"
+                      app:layout_constraintHorizontal_bias="0.0"
+                      app:layout_constraintStart_toStartOf="parent"
+                      app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
+
+                      <TextView
+                          android:id="@+id/txt_category_title"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_marginStart="12dp"
+                          android:layout_marginTop="8dp"
+                          android:text="category"
+                          android:textAllCaps="true"
+                          android:textColor="@color/dark_gray"
+                          android:textSize="14sp"
+                          app:layout_constraintStart_toStartOf="parent"
+                          app:layout_constraintTop_toTopOf="parent" />
+
+                      <TextView
+                          android:id="@+id/textView4"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_marginEnd="8dp"
+                          android:text="TÜMÜ >"
+                          android:textColor="@color/dark_gray"
+                          android:textSize="12sp"
+                          app:layout_constraintBottom_toBottomOf="@+id/txt_category_title"
+                          app:layout_constraintEnd_toEndOf="parent"
+                          app:layout_constraintTop_toTopOf="@+id/txt_category_title" />
+
+                      <androidx.recyclerview.widget.RecyclerView
+                          android:id="@+id/rv_category"
+                          android:layout_width="0dp"
+                          android:layout_height="wrap_content"
+                          android:layout_marginTop="8dp"
+                          android:clipToPadding="false"
+                          android:overScrollMode="never"
+                          android:paddingLeft="12dp"
+                          app:layout_constraintEnd_toEndOf="parent"
+                          app:layout_constraintStart_toStartOf="parent"
+                          app:layout_constraintTop_toBottomOf="@+id/txt_category_title" />
+                  </androidx.constraintlayout.widget.ConstraintLayout>
+
+                  <androidx.constraintlayout.widget.ConstraintLayout
+                      android:id="@+id/constraintLayout"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      app:layout_constraintEnd_toEndOf="parent"
+                      app:layout_constraintStart_toStartOf="parent"
+                      app:layout_constraintTop_toBottomOf="@+id/constraintLayout3">
+
+                      <TextView
+                          android:id="@+id/txt__main_collection_title"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_marginStart="12dp"
+                          android:layout_marginTop="8dp"
+                          android:text="collection"
+                          android:textAllCaps="true"
+                          android:textColor="@color/dark_gray"
+                          android:textSize="14sp"
+                          app:layout_constraintStart_toStartOf="parent"
+                          app:layout_constraintTop_toTopOf="parent" />
+
+                      <TextView
+                          android:id="@+id/textView6"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_marginEnd="8dp"
+                          android:text="TÜMÜ >"
+                          android:textColor="@color/dark_gray"
+                          android:textSize="12sp"
+                          app:layout_constraintBottom_toBottomOf="@+id/txt__main_collection_title"
+                          app:layout_constraintEnd_toEndOf="parent"
+                          app:layout_constraintTop_toTopOf="@+id/txt__main_collection_title" />
+
+                      <androidx.recyclerview.widget.RecyclerView
+                          android:id="@+id/rv_collections"
+                          android:layout_width="0dp"
+                          android:layout_height="wrap_content"
+                          android:layout_marginTop="8dp"
+                          android:clipToPadding="false"
+                          android:overScrollMode="never"
+                          android:paddingLeft="12dp"
+                          app:layout_constraintEnd_toEndOf="parent"
+                          app:layout_constraintStart_toStartOf="parent"
+                          app:layout_constraintTop_toBottomOf="@+id/txt__main_collection_title" />
+                  </androidx.constraintlayout.widget.ConstraintLayout>
+
+                  <androidx.constraintlayout.widget.ConstraintLayout
+                      android:id="@+id/constraintLayout4"
+                      android:layout_width="match_parent"
+
+                      android:layout_height="wrap_content"
+                      app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
 
 
+                      <ImageView
+                          android:id="@+id/img_editor_shop_bg"
+                          android:layout_width="0dp"
+                          android:layout_height="0dp"
+                          android:foreground="@drawable/category_image_overlay"
+                          android:scaleType="centerCrop"
+                          app:layout_constraintBottom_toBottomOf="parent"
+                          app:layout_constraintEnd_toEndOf="parent"
+                          app:layout_constraintStart_toStartOf="parent"
+                          app:layout_constraintTop_toTopOf="parent"
+                          tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
-        </androidx.core.widget.NestedScrollView>
+                      <TextView
+                          android:id="@+id/txt_editor_shop_category_title"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_marginStart="12dp"
+                          android:layout_marginTop="10dp"
+                          android:text="editor_shops"
+                          android:textAllCaps="true"
+                          android:textColor="@color/white"
+                          android:textSize="14sp"
+                          app:layout_constraintStart_toStartOf="parent"
+                          app:layout_constraintTop_toTopOf="parent" />
+
+                      <TextView
+                          android:id="@+id/textView8"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_marginEnd="8dp"
+                          android:text="TÜMÜ>"
+                          android:textColor="@color/white"
+                          android:textSize="12sp"
+                          app:layout_constraintBottom_toBottomOf="@+id/txt_editor_shop_category_title"
+                          app:layout_constraintEnd_toEndOf="parent"
+                          app:layout_constraintTop_toTopOf="@+id/txt_editor_shop_category_title" />
+
+                      <androidx.recyclerview.widget.RecyclerView
+                          android:id="@+id/rv_editor_shops"
+                          android:layout_width="0dp"
+                          android:layout_height="wrap_content"
+                          android:layout_marginBottom="15dp"
+                          android:clipToPadding="false"
+                          android:overScrollMode="never"
+                          android:paddingLeft="12dp"
+                          app:layout_constraintBottom_toBottomOf="parent"
+                          app:layout_constraintEnd_toEndOf="parent"
+                          app:layout_constraintStart_toStartOf="parent"
+                          app:layout_constraintTop_toBottomOf="@+id/txt_editor_shop_category_title" />
 
 
+                  </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+                  <androidx.constraintlayout.widget.ConstraintLayout
+                      android:layout_width="0dp"
+                      android:layout_height="wrap_content"
+
+                      app:layout_constraintEnd_toEndOf="parent"
+                      app:layout_constraintStart_toStartOf="parent"
+                      app:layout_constraintTop_toBottomOf="@+id/constraintLayout4">
+
+                      <TextView
+                          android:id="@+id/txt_new_shops_category_title"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_marginStart="12dp"
+                          android:layout_marginTop="8dp"
+                          android:text="new_shops"
+                          android:textAllCaps="true"
+                          android:textColor="@color/dark_gray"
+                          android:textSize="14sp"
+                          app:layout_constraintStart_toStartOf="parent"
+                          app:layout_constraintTop_toTopOf="parent" />
+
+                      <TextView
+                          android:id="@+id/textView10"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_marginEnd="8dp"
+                          android:text="tümü>"
+                          android:textAllCaps="true"
+                          android:textColor="@color/dark_gray"
+                          android:textSize="12sp"
+                          app:layout_constraintBottom_toBottomOf="@+id/txt_new_shops_category_title"
+                          app:layout_constraintEnd_toEndOf="parent"
+                          app:layout_constraintTop_toTopOf="@+id/txt_new_shops_category_title" />
+
+                      <androidx.recyclerview.widget.RecyclerView
+                          android:id="@+id/rv_new_shops"
+                          android:layout_width="0dp"
+                          android:layout_height="wrap_content"
+                          android:layout_marginTop="8dp"
+                          android:layout_marginBottom="15dp"
+                          android:clipToPadding="false"
+                          android:overScrollMode="never"
+                          android:paddingLeft="12dp"
+                          app:layout_constraintEnd_toEndOf="parent"
+                          app:layout_constraintStart_toStartOf="parent"
+                          app:layout_constraintTop_toBottomOf="@+id/txt_new_shops_category_title" />
+                  </androidx.constraintlayout.widget.ConstraintLayout>
+
+              </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+          </androidx.core.widget.NestedScrollView>
+
+
+      </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+  </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </androidx.drawerlayout.widget.DrawerLayout >
