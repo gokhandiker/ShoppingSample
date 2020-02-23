@@ -21,9 +21,7 @@ import android.widget.SearchView;
 
 import com.google.gson.Gson;
 import com.melisa.vitrinova.carousel.DepthPageTransformer;
-import com.melisa.vitrinova.carousel.SliderActivity;
 import com.melisa.vitrinova.carousel.ViewPagerAdapter;
-import com.melisa.vitrinova.carousel.ZoomOutPageTransformer;
 import com.melisa.vitrinova.category.CategoryAdapter;
 import com.melisa.vitrinova.collections.CollectionsAdapter;
 import com.melisa.vitrinova.model.CategoriesType;
@@ -83,6 +81,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
+        sliderDotspanel = findViewById(R.id.carousel_dots);
+        viewPager = findViewById(R.id.vp_carousel);
         newProductsRecycler= findViewById(R.id.rv_featureds);
         categoryRecycler= findViewById(R.id.rv_category);
         collectionsRecycler= findViewById(R.id.rv_collections);
@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
 
         initSearchView();
         getWebservice();
-        initCarousel();
+
 
     }
 
@@ -150,12 +150,12 @@ public class MainActivity extends AppCompatActivity {
                 MainActivity.this,
                 LinearLayoutManager.HORIZONTAL,
                 false);
-        runOnUiThread(() -> {
+
             newProductsRecycler.setLayoutManager(HorizontalLayoutNewProduct);
             // Set adapter on recycler view
             newProductsRecycler.setAdapter(newProductsAdapter);
 
-        });
+
 
 
 
@@ -164,42 +164,37 @@ public class MainActivity extends AppCompatActivity {
     private void initCategoryRecycler() {
         categoryAdapter = new CategoryAdapter(categoriesType.getCategories(),this);
         HorizontalLayoutCategory = new LinearLayoutManager(MainActivity.this,LinearLayoutManager.HORIZONTAL,false);
-        runOnUiThread(() -> {
+
             categoryRecycler.setLayoutManager(HorizontalLayoutCategory);
             // Set adapter on recycler view
             categoryRecycler.setAdapter(categoryAdapter);
 
-        });
+
 
     }
 
     private void initCollectionsRecycler() {
         collectionsAdapter = new CollectionsAdapter(collectionsType.getCollections(),this);
         HorizontalLayoutCollections = new LinearLayoutManager(MainActivity.this,LinearLayoutManager.HORIZONTAL,false);
-        runOnUiThread(() -> {
+
             collectionsRecycler.setLayoutManager(HorizontalLayoutCollections);
             // Set adapter on recycler view
             collectionsRecycler.setAdapter(collectionsAdapter);
 
-        });
+
 
     }
 
 
 
     private void initCarousel() {
-        viewPager = findViewById(R.id.viewPager);
 
-
-        sliderDotspanel = findViewById(R.id.SliderDots);
-
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this);
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this,featuredType.getFeatured());
         viewPager.setPageTransformer(true, new DepthPageTransformer());
-
         viewPager.setAdapter(viewPagerAdapter);
-
         dotscount = viewPagerAdapter.getCount();
         dots = new ImageView[dotscount];
+
 
         for (int i = 0; i < dotscount; i++) {
 
@@ -228,9 +223,7 @@ public class MainActivity extends AppCompatActivity {
                 for (int i = 0; i < dotscount; i++) {
                     dots[i].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.nonactive_dot));
                 }
-
-                dots[position].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.active_dot));
-
+                    dots[position].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.active_dot));
             }
 
             @Override
@@ -297,10 +290,13 @@ public class MainActivity extends AppCompatActivity {
                                    }
 
 
+                  runOnUiThread(() -> {
+                      initCarousel();
+                      initNewProductsRecycler();
+                      initCategoryRecycler();
+                      initCollectionsRecycler();
+                  });
 
-                initNewProductsRecycler();
-                  initCategoryRecycler();
-                  initCollectionsRecycler();
             }
         });
     }
@@ -315,3 +311,4 @@ public class MainActivity extends AppCompatActivity {
 // TODO: 22.02.2020 gereksiz yorum satırlarını sil
 // TODO: 22.02.2020 mainactivitydeki kod kalabalığını önle
 // TODO: 22.02.2020  HorizontalLayoutNewProduct,HorizontalLayoutCategory,HorizontalLayoutCollections ayrı ayrı kullanmak gerekiyor mu araştır
+// TODO: 23.02.2020 main layout tasarımının baitleştirilmesi adına tasarımları parçalara bölüp ana sayfanın layoutunu lineer olarak ayarla ve include et

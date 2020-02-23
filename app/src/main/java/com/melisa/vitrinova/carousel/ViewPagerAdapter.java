@@ -5,25 +5,31 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.melisa.vitrinova.R;
+import com.melisa.vitrinova.model.Featured;
+import com.melisa.vitrinova.newproducts.PicassoClient;
+
+import java.util.List;
 
 public class ViewPagerAdapter  extends PagerAdapter {
 
     private Context context;
     private LayoutInflater layoutInflater;
-    private Integer [] images = {R.drawable.slide1,R.drawable.slide2,R.drawable.slide3};
+    private List<Featured> featuredList;
 
-    public ViewPagerAdapter(Context context) {
+    public ViewPagerAdapter(Context context,List<Featured> list) {
         this.context = context;
+        this.featuredList=list;
     }
 
     @Override
     public int getCount() {
-        return images.length;
+        return featuredList.size();
     }
 
     @Override
@@ -36,8 +42,15 @@ public class ViewPagerAdapter  extends PagerAdapter {
 
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = layoutInflater.inflate(R.layout.slider_item, null);
-        ImageView imageView =  view.findViewById(R.id.imageView);
-        imageView.setImageResource(images[position]);
+        ImageView featuredImage =  view.findViewById(R.id.img_featured_image);
+        TextView txtTitle =  view.findViewById(R.id.txt_title);
+        TextView txtSubTitle =  view.findViewById(R.id.txt_sub_title);
+
+        txtTitle.setText(featuredList.get(position).getTitle());
+        txtSubTitle.setText(featuredList.get(position).getSubTitle());
+
+        PicassoClient.downloadImage(context,featuredList.get(position).getCover().getUrl(),featuredImage);
+
 
         ViewPager vp = (ViewPager) container;
         vp.addView(view, 0);
@@ -51,6 +64,5 @@ public class ViewPagerAdapter  extends PagerAdapter {
         ViewPager vp = (ViewPager) container;
         View view = (View) object;
         vp.removeView(view);
-
     }
 }

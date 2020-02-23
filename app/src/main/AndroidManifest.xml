@@ -19,7 +19,6 @@
                 android:resource="@xml/searchable"/>
         </activity>
         <activity android:name=".CardSliderActivity" />
-        <activity android:name=".carousel.SliderActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
