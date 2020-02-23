@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
 
@@ -74,22 +75,25 @@ public class MainActivity extends AppCompatActivity {
     private EditorShopAdapter editorShopAdapter;
     private NewShopAdapter newShopAdapter;
     private LinearLayoutManager HorizontalLayoutNewProduct, HorizontalLayoutCategory, HorizontalLayoutCollections,HorizontalLayoutEditorShop,HorizontalLayoutNewShop;
-    private View ChildView;
-    private int RecyclerViewItemPosition;
     private RecyclerView.LayoutManager RecyclerViewLayoutManager;
 
     private ViewPager viewPager;
     private LinearLayout sliderDotspanel;
     private int dotscount;
     private ImageView[] dots;
-
-
     private OkHttpClient client;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            Log.e("onRefresh","REFRESHIN");
+            getWebService();
+        });
 
 
 
@@ -227,6 +231,7 @@ public class MainActivity extends AppCompatActivity {
 
         final SnapHelper snapHelper = new LinearSnapHelper();
         snapHelper.attachToRecyclerView(editorShopsRecycler);
+
         editorShopsRecycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
             @Override
@@ -373,6 +378,8 @@ public class MainActivity extends AppCompatActivity {
                     initCollectionsRecycler();
                     initEditorShops();
                     initNewShopsRecycler();
+
+                    swipeRefreshLayout.setRefreshing(false);
                 });
 
             }
