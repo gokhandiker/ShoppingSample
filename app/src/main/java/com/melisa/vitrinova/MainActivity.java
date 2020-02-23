@@ -51,18 +51,18 @@ import okhttp3.Response;
 public class MainActivity extends AppCompatActivity {
 
 
-    private  FeaturedType featuredType;
-    private  NewProductsType newProductsType;
-    private  CategoriesType categoriesType;
-    private  CollectionsType collectionsType;
-    private  EditorShopsType editorShopsType;
-    private  NewShopsType newShopsType;
+    private FeaturedType featuredType;
+    private NewProductsType newProductsType;
+    private CategoriesType categoriesType;
+    private CollectionsType collectionsType;
+    private EditorShopsType editorShopsType;
+    private NewShopsType newShopsType;
 
-    private RecyclerView newProductsRecycler,categoryRecycler,collectionsRecycler;
+    private RecyclerView newProductsRecycler, categoryRecycler, collectionsRecycler;
     private NewProductsAdapter newProductsAdapter;
     private CategoryAdapter categoryAdapter;
     private CollectionsAdapter collectionsAdapter;
-    private LinearLayoutManager HorizontalLayoutNewProduct,HorizontalLayoutCategory,HorizontalLayoutCollections;
+    private LinearLayoutManager HorizontalLayoutNewProduct, HorizontalLayoutCategory, HorizontalLayoutCollections;
     private View ChildView;
     private int RecyclerViewItemPosition;
     private RecyclerView.LayoutManager RecyclerViewLayoutManager;
@@ -83,23 +83,20 @@ public class MainActivity extends AppCompatActivity {
 
         sliderDotspanel = findViewById(R.id.carousel_dots);
         viewPager = findViewById(R.id.vp_carousel);
-        newProductsRecycler= findViewById(R.id.rv_featureds);
-        categoryRecycler= findViewById(R.id.rv_category);
-        collectionsRecycler= findViewById(R.id.rv_collections);
+        newProductsRecycler = findViewById(R.id.rv_featureds);
+        categoryRecycler = findViewById(R.id.rv_category);
+        collectionsRecycler = findViewById(R.id.rv_collections);
 
         newProductsRecycler.setHasFixedSize(true);
         categoryRecycler.setHasFixedSize(true);
         collectionsRecycler.setHasFixedSize(true);
 
-        RecyclerViewLayoutManager= new LinearLayoutManager(getApplicationContext());
+        RecyclerViewLayoutManager = new LinearLayoutManager(getApplicationContext());
         newProductsRecycler.setLayoutManager(RecyclerViewLayoutManager);
-        RecyclerViewLayoutManager= new LinearLayoutManager(getApplicationContext());
+        RecyclerViewLayoutManager = new LinearLayoutManager(getApplicationContext());
         categoryRecycler.setLayoutManager(RecyclerViewLayoutManager);
-        RecyclerViewLayoutManager= new LinearLayoutManager(getApplicationContext());
+        RecyclerViewLayoutManager = new LinearLayoutManager(getApplicationContext());
         collectionsRecycler.setLayoutManager(RecyclerViewLayoutManager);
-
-
-
 
 
         initSearchView();
@@ -144,73 +141,59 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initNewProductsRecycler() {
-        newProductsAdapter = new NewProductsAdapter(newProductsType.getProducts(),this);
+        newProductsAdapter = new NewProductsAdapter(newProductsType.getProducts(), this);
         HorizontalLayoutNewProduct
                 = new LinearLayoutManager(
                 MainActivity.this,
                 LinearLayoutManager.HORIZONTAL,
                 false);
 
-            newProductsRecycler.setLayoutManager(HorizontalLayoutNewProduct);
-            // Set adapter on recycler view
-            newProductsRecycler.setAdapter(newProductsAdapter);
-
-
-
+        newProductsRecycler.setLayoutManager(HorizontalLayoutNewProduct);
+        // Set adapter on recycler view
+        newProductsRecycler.setAdapter(newProductsAdapter);
 
 
     }
 
     private void initCategoryRecycler() {
-        categoryAdapter = new CategoryAdapter(categoriesType.getCategories(),this);
-        HorizontalLayoutCategory = new LinearLayoutManager(MainActivity.this,LinearLayoutManager.HORIZONTAL,false);
+        categoryAdapter = new CategoryAdapter(categoriesType.getCategories(), this);
+        HorizontalLayoutCategory = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
 
-            categoryRecycler.setLayoutManager(HorizontalLayoutCategory);
-            // Set adapter on recycler view
-            categoryRecycler.setAdapter(categoryAdapter);
-
+        categoryRecycler.setLayoutManager(HorizontalLayoutCategory);
+        // Set adapter on recycler view
+        categoryRecycler.setAdapter(categoryAdapter);
 
 
     }
 
     private void initCollectionsRecycler() {
-        collectionsAdapter = new CollectionsAdapter(collectionsType.getCollections(),this);
-        HorizontalLayoutCollections = new LinearLayoutManager(MainActivity.this,LinearLayoutManager.HORIZONTAL,false);
+        collectionsAdapter = new CollectionsAdapter(collectionsType.getCollections(), this);
+        HorizontalLayoutCollections = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
 
-            collectionsRecycler.setLayoutManager(HorizontalLayoutCollections);
-            // Set adapter on recycler view
-            collectionsRecycler.setAdapter(collectionsAdapter);
-
+        collectionsRecycler.setLayoutManager(HorizontalLayoutCollections);
+        collectionsRecycler.setAdapter(collectionsAdapter);
 
 
     }
 
 
-
     private void initCarousel() {
 
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this,featuredType.getFeatured());
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this, featuredType.getFeaturedList());
         viewPager.setPageTransformer(true, new DepthPageTransformer());
         viewPager.setAdapter(viewPagerAdapter);
         dotscount = viewPagerAdapter.getCount();
         dots = new ImageView[dotscount];
 
-
         for (int i = 0; i < dotscount; i++) {
-
             dots[i] = new ImageView(this);
             dots[i].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.nonactive_dot));
-
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-
             params.setMargins(8, 0, 8, 0);
-
             sliderDotspanel.addView(dots[i], params);
-
         }
 
         dots[0].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.active_dot));
-
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -223,7 +206,7 @@ public class MainActivity extends AppCompatActivity {
                 for (int i = 0; i < dotscount; i++) {
                     dots[i].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.nonactive_dot));
                 }
-                    dots[position].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.active_dot));
+                dots[position].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.active_dot));
             }
 
             @Override
@@ -277,25 +260,25 @@ public class MainActivity extends AppCompatActivity {
                 }
 
 
-                 featuredType = gson.fromJson(featured.toString(), FeaturedType.class);
-                 newProductsType = gson.fromJson(products.toString(), NewProductsType.class);
-                 categoriesType = gson.fromJson(categories.toString(), CategoriesType.class);
-                 collectionsType = gson.fromJson(collections.toString(), CollectionsType.class);
-                 editorShopsType = gson.fromJson(editorShops.toString(), EditorShopsType.class);
-                 newShopsType = gson.fromJson(newShops.toString(), NewShopsType.class);
+                featuredType = gson.fromJson(featured.toString(), FeaturedType.class);
+                newProductsType = gson.fromJson(products.toString(), NewProductsType.class);
+                categoriesType = gson.fromJson(categories.toString(), CategoriesType.class);
+                collectionsType = gson.fromJson(collections.toString(), CollectionsType.class);
+                editorShopsType = gson.fromJson(editorShops.toString(), EditorShopsType.class);
+                newShopsType = gson.fromJson(newShops.toString(), NewShopsType.class);
 
 
-                  for (int i= 0;i<newProductsType.getProducts().size();i++){
-                                       Log.e("newProductsType",""+newProductsType.getProducts().get(i).getImages().get(0).getThumbnail().getUrl());
-                                   }
+                for (int i = 0; i < newProductsType.getProducts().size(); i++) {
+                    Log.e("newProductsType", "" + newProductsType.getProducts().get(i).getImages().get(0).getThumbnail().getUrl());
+                }
 
 
-                  runOnUiThread(() -> {
-                      initCarousel();
-                      initNewProductsRecycler();
-                      initCategoryRecycler();
-                      initCollectionsRecycler();
-                  });
+                runOnUiThread(() -> {
+                    initCarousel();
+                    initNewProductsRecycler();
+                    initCategoryRecycler();
+                    initCollectionsRecycler();
+                });
 
             }
         });

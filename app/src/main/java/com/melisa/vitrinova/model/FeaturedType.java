@@ -6,7 +6,7 @@ public class FeaturedType extends Type {
 
     private List<Featured> featured = null;
 
-    public List<Featured> getFeatured() {
+    public List<Featured> getFeaturedList() {
         return featured;
     }
 
