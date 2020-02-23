@@ -3,10 +3,12 @@ package com.melisa.vitrinova.model;
 import androidx.annotation.Nullable;
 
 public class Cover extends Image {
+    @Nullable
     private MediumImage medium;
     @Nullable
     private ThumbnailImage thumbnail;
 
+    @Nullable
     public MediumImage getMedium() {
         return medium;
     }

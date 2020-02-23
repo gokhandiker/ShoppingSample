@@ -13,8 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.melisa.vitrinova.R;
-import com.melisa.vitrinova.model.Cover;
-import com.melisa.vitrinova.model.EditorShop;
 import com.melisa.vitrinova.model.Shop;
 import com.melisa.vitrinova.newproducts.PicassoClient;
 
@@ -96,7 +94,7 @@ public class NewShopAdapter extends RecyclerView.Adapter<NewShopAdapter.ShopHold
         holder.txtNewShopName.setText(newShopList.get(position).getName());
         holder.txtNewShopDefinition.setText(newShopList.get(position).getDefinition());
         if (newShopList.get(position).getProductCount()!=null)
-        holder.txtNewShopProductCount.setText(""+newShopList.get(position).getProductCount());
+        holder.txtNewShopProductCount.setText(newShopList.get(position).getProductCount()+" ürün");
 
 
         setAnimation(holder.itemView, position);

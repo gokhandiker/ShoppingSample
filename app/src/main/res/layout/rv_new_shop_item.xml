@@ -27,10 +27,10 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/avatars" />
 
-        <ImageView
+        <com.melisa.vitrinova.RoundedImageView
             android:id="@+id/img_new_shop_logo"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:foreground="@drawable/fg_editor_shop_top_img"
@@ -41,8 +41,10 @@
         <TextView
             android:id="@+id/txt_new_shop_name"
             android:layout_width="wrap_content"
+            android:textColor="@color/dark_gray"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:textSize="14sp"
             android:text="TextView"
             app:layout_constraintStart_toEndOf="@+id/img_new_shop_logo"
             app:layout_constraintTop_toTopOf="@+id/img_new_shop_logo" />
@@ -53,7 +55,16 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="5dp"
+            android:layout_marginEnd="100dp"
+            android:textSize="13sp"
+            android:ellipsize="end"
+            android:textColor="@color/light_gray"
+            android:gravity="left"
+            android:maxLines="1"
+            android:singleLine="true"
             android:text="TextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/img_new_shop_logo"
             app:layout_constraintTop_toBottomOf="@+id/txt_new_shop_name" />
 
@@ -72,7 +83,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:textAllCaps="true"
             android:text="TextView"
+            android:textColor="@color/dark_gray"
             app:layout_constraintBottom_toBottomOf="@+id/img_icon"
             app:layout_constraintStart_toEndOf="@+id/img_icon"
             app:layout_constraintTop_toTopOf="@+id/img_icon" />
