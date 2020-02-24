@@ -2,6 +2,7 @@ package com.melisa.vitrinova;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.MenuItemCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
@@ -81,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     private ImageView[] dots;
     private OkHttpClient client;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
         swipeRefreshLayout.setOnRefreshListener(this);
 
-
+        searchView = findViewById(R.id.search_view);
 
         sliderDotspanel = findViewById(R.id.carousel_dots);
         viewPager = findViewById(R.id.vp_carousel);
@@ -127,10 +129,14 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     }
 
     private void initSearchView() {
+
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = findViewById(R.id.search_view);
+
+
+
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
+
 
         int magId = getResources().getIdentifier("android:id/search_mag_icon", null, null);
         ImageView magImage = searchView.findViewById(magId);
@@ -151,12 +157,19 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
 
         }
 
-        // Get the intent, verify the action and get the query
-        Intent intent = getIntent();
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            String query = intent.getStringExtra(SearchManager.QUERY);
-            Log.e("ACTION_SEARCH", query);
-        }
+
+    }
+
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+
+        String query = intent.getStringExtra(SearchManager.QUERY);
+        Log.e("onQueryTextChange",query);
+        searchView.setQueryHint(query);
+
     }
 
     private void initNewProductsRecycler() {
