@@ -16,6 +16,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -41,6 +42,7 @@ import com.melisa.vitrinova.newproducts.NewProductsAdapter;
 import com.melisa.vitrinova.newproducts.PicassoClient;
 import com.melisa.vitrinova.newshops.NewShopAdapter;
 
+
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -55,10 +57,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 
-/**
- * https://github.com/arimorty/floatingsearchview
- */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
 
     private FeaturedType featuredType;
@@ -74,8 +73,7 @@ public class MainActivity extends AppCompatActivity {
     private CollectionsAdapter collectionsAdapter;
     private EditorShopAdapter editorShopAdapter;
     private NewShopAdapter newShopAdapter;
-    private LinearLayoutManager HorizontalLayoutNewProduct, HorizontalLayoutCategory, HorizontalLayoutCollections,HorizontalLayoutEditorShop,HorizontalLayoutNewShop;
-    private RecyclerView.LayoutManager RecyclerViewLayoutManager;
+    private LinearLayoutManager HorizontalLayoutEditorShop;
 
     private ViewPager viewPager;
     private LinearLayout sliderDotspanel;
@@ -90,10 +88,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
-        swipeRefreshLayout.setOnRefreshListener(() -> {
-            Log.e("onRefresh","REFRESHIN");
-            refreshWebService();
-        });
+        swipeRefreshLayout.setOnRefreshListener(this);
 
 
 
@@ -111,17 +106,19 @@ public class MainActivity extends AppCompatActivity {
         editorShopsRecycler.setHasFixedSize(true);
         newShopsRecycler.setHasFixedSize(true);
 
-        RecyclerViewLayoutManager = new LinearLayoutManager(getApplicationContext());
-        newProductsRecycler.setLayoutManager(RecyclerViewLayoutManager);
-        RecyclerViewLayoutManager = new LinearLayoutManager(getApplicationContext());
-        categoryRecycler.setLayoutManager(RecyclerViewLayoutManager);
-        RecyclerViewLayoutManager = new LinearLayoutManager(getApplicationContext());
-        collectionsRecycler.setLayoutManager(RecyclerViewLayoutManager);
-        RecyclerViewLayoutManager = new LinearLayoutManager(getApplicationContext());
-        editorShopsRecycler.setLayoutManager(RecyclerViewLayoutManager);
-        RecyclerViewLayoutManager = new LinearLayoutManager(getApplicationContext());
-        newShopsRecycler.setLayoutManager(RecyclerViewLayoutManager);
+        RecyclerView.LayoutManager recyclerViewLayoutManager = new LinearLayoutManager(getApplicationContext());
+        newProductsRecycler.setLayoutManager(recyclerViewLayoutManager);
+        recyclerViewLayoutManager = new LinearLayoutManager(getApplicationContext());
+        categoryRecycler.setLayoutManager(recyclerViewLayoutManager);
+        recyclerViewLayoutManager = new LinearLayoutManager(getApplicationContext());
+        collectionsRecycler.setLayoutManager(recyclerViewLayoutManager);
+        recyclerViewLayoutManager = new LinearLayoutManager(getApplicationContext());
+        editorShopsRecycler.setLayoutManager(recyclerViewLayoutManager);
+        recyclerViewLayoutManager = new LinearLayoutManager(getApplicationContext());
+        newShopsRecycler.setLayoutManager(recyclerViewLayoutManager);
 
+
+        client = new OkHttpClient();
 
         initSearchView();
         getWebService();
@@ -174,13 +171,12 @@ public class MainActivity extends AppCompatActivity {
         });
         txtNewProducts.setText(newProductsType.getTitle());
         newProductsAdapter = new NewProductsAdapter(newProductsType.getProducts(), this);
-        HorizontalLayoutNewProduct
-                = new LinearLayoutManager(
+        LinearLayoutManager horizontalLayoutNewProduct = new LinearLayoutManager(
                 MainActivity.this,
                 LinearLayoutManager.HORIZONTAL,
                 false);
 
-        newProductsRecycler.setLayoutManager(HorizontalLayoutNewProduct);
+        newProductsRecycler.setLayoutManager(horizontalLayoutNewProduct);
         // Set adapter on recycler view
         newProductsRecycler.setAdapter(newProductsAdapter);
 
@@ -192,9 +188,9 @@ public class MainActivity extends AppCompatActivity {
 
         txtNewProducts.setText(categoriesType.getTitle());
         categoryAdapter = new CategoryAdapter(categoriesType.getCategories(), this);
-        HorizontalLayoutCategory = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager horizontalLayoutCategory = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
 
-        categoryRecycler.setLayoutManager(HorizontalLayoutCategory);
+        categoryRecycler.setLayoutManager(horizontalLayoutCategory);
         categoryRecycler.setAdapter(categoryAdapter);
 
 
@@ -205,9 +201,9 @@ public class MainActivity extends AppCompatActivity {
 
         txtNewProducts.setText(collectionsType.getTitle());
         collectionsAdapter = new CollectionsAdapter(collectionsType.getCollections(), this);
-        HorizontalLayoutCollections = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager horizontalLayoutCollections = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
 
-        collectionsRecycler.setLayoutManager(HorizontalLayoutCollections);
+        collectionsRecycler.setLayoutManager(horizontalLayoutCollections);
         collectionsRecycler.setAdapter(collectionsAdapter);
 
 
@@ -254,9 +250,9 @@ public class MainActivity extends AppCompatActivity {
 
         txtNewProducts.setText(newShopsType.getTitle());
         newShopAdapter = new NewShopAdapter(newShopsType.getShops(), this);
-        HorizontalLayoutNewShop = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager horizontalLayoutNewShop = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
 
-        newShopsRecycler.setLayoutManager(HorizontalLayoutNewShop);
+        newShopsRecycler.setLayoutManager(horizontalLayoutNewShop);
         newShopsRecycler.setAdapter(newShopAdapter);
 
         final SnapHelper snapHelper = new LinearSnapHelper();
@@ -323,8 +319,13 @@ public class MainActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+
+
+
+
+
     private void getWebService() {
-        client = new OkHttpClient();
+
         final Request request = new Request.Builder().url("https://www.vitrinova.com/api/v2/discover").build();
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -378,12 +379,13 @@ public class MainActivity extends AppCompatActivity {
                     initCollectionsRecycler();
                     initEditorShops();
                     initNewShopsRecycler();
-
-                    swipeRefreshLayout.setRefreshing(false);
                 });
 
             }
         });
+
+
+
     }
 
     private void refreshWebService() {
@@ -436,13 +438,20 @@ public class MainActivity extends AppCompatActivity {
 
                 runOnUiThread(() -> {
 
+                    categoryAdapter = new CategoryAdapter(categoriesType.getCategories(),MainActivity.this);
+                    categoryRecycler.setAdapter(categoryAdapter);
 
+                    newProductsAdapter = new NewProductsAdapter(newProductsType.getProducts(),MainActivity.this);
+                    newProductsRecycler.setAdapter(newProductsAdapter);
 
-                    categoryAdapter.notifyDataSetChanged();
-                    collectionsAdapter.notifyDataSetChanged();
-                    editorShopAdapter.notifyDataSetChanged();
-                    newShopAdapter.notifyDataSetChanged();
-                    newProductsAdapter.refresh();
+                    collectionsAdapter = new CollectionsAdapter(collectionsType.getCollections(),MainActivity.this);
+                    collectionsRecycler.setAdapter(collectionsAdapter);
+
+                    editorShopAdapter = new EditorShopAdapter(editorShopsType.getShops(),MainActivity.this);
+                    editorShopsRecycler.setAdapter(editorShopAdapter);
+
+                    newShopAdapter = new NewShopAdapter(newShopsType.getShops(),MainActivity.this);
+                    newShopsRecycler.setAdapter(newShopAdapter);
 
                     swipeRefreshLayout.setRefreshing(false);
                 });
@@ -450,15 +459,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onRefresh() {
+        refreshWebService();
+    }
 }
 
-
-// TODO: 22.02.2020 null kontrollerini yap
-// TODO: 22.02.2020 paket yapılarını mimariye uygun olarak düzenle
-// TODO: 22.02.2020 kodları kısaltmaya çalış
-// TODO: 22.02.2020 yeni ürünler ve koleksiyon gibi başlıkları model classtan çekip yazacaksın
-// TODO: 22.02.2020 data transferleri için eventbus kullan
-// TODO: 22.02.2020 gereksiz yorum satırlarını sil
-// TODO: 22.02.2020 mainactivitydeki kod kalabalığını önle
-// TODO: 22.02.2020  HorizontalLayoutNewProduct,HorizontalLayoutCategory,HorizontalLayoutCollections ayrı ayrı kullanmak gerekiyor mu araştır
-// TODO: 23.02.2020 main layout tasarımının baitleştirilmesi adına tasarımları parçalara bölüp ana sayfanın layoutunu lineer olarak ayarla ve include et
