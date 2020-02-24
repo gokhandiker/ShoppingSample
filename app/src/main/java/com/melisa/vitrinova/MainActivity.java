@@ -2,7 +2,6 @@ package com.melisa.vitrinova;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.core.view.MenuItemCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,7 +16,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -31,17 +29,21 @@ import com.google.gson.Gson;
 import com.melisa.vitrinova.carousel.DepthPageTransformer;
 import com.melisa.vitrinova.carousel.ViewPagerAdapter;
 import com.melisa.vitrinova.category.CategoryAdapter;
+import com.melisa.vitrinova.collections.CollectionsActivity;
 import com.melisa.vitrinova.collections.CollectionsAdapter;
 import com.melisa.vitrinova.editorshops.EditorShopAdapter;
+import com.melisa.vitrinova.editorshops.EditorShopsActivity;
 import com.melisa.vitrinova.model.CategoriesType;
 import com.melisa.vitrinova.model.CollectionsType;
 import com.melisa.vitrinova.model.EditorShopsType;
 import com.melisa.vitrinova.model.FeaturedType;
 import com.melisa.vitrinova.model.NewProductsType;
 import com.melisa.vitrinova.model.NewShopsType;
+import com.melisa.vitrinova.newproducts.NewProductsActivity;
 import com.melisa.vitrinova.newproducts.NewProductsAdapter;
 import com.melisa.vitrinova.newproducts.PicassoClient;
 import com.melisa.vitrinova.newshops.NewShopAdapter;
+import com.melisa.vitrinova.newshops.NewShopsActivity;
 
 
 import org.greenrobot.eventbus.EventBus;
@@ -58,7 +60,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 
-public class MainActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
+public class MainActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
 
 
     private FeaturedType featuredType;
@@ -101,6 +103,17 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         collectionsRecycler = findViewById(R.id.rv_collections);
         editorShopsRecycler = findViewById(R.id.rv_editor_shops);
         newShopsRecycler = findViewById(R.id.rv_new_shops);
+
+        TextView btnAllCollections = findViewById(R.id.txt_all_collection_btn);
+        btnAllCollections.setOnClickListener(this);
+        TextView btnNewProducts = findViewById(R.id.txt_new_products_all_btn);
+        btnNewProducts.setOnClickListener(this);
+        TextView btnEditorShops = findViewById(R.id.txt_all_editor_shops_btn);
+        btnEditorShops.setOnClickListener(this);
+        TextView btnNewShops = findViewById(R.id.txt_new_shops_btn);
+        btnNewShops.setOnClickListener(this);
+
+
 
         newProductsRecycler.setHasFixedSize(true);
         categoryRecycler.setHasFixedSize(true);
@@ -174,12 +187,8 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
 
     private void initNewProductsRecycler() {
         TextView txtNewProducts = findViewById(R.id.txt_new_products_title);
-        TextView txtAllProducts = findViewById(R.id.txt_new_products_all_btn);
-        txtAllProducts.setOnClickListener(view -> {
 
-            EventBus.getDefault().postSticky(newProductsType);
-            startActivity(new Intent(MainActivity.this,CardSliderActivity.class));
-        });
+
         txtNewProducts.setText(newProductsType.getTitle());
         newProductsAdapter = new NewProductsAdapter(newProductsType.getProducts(), this);
         LinearLayoutManager horizontalLayoutNewProduct = new LinearLayoutManager(
@@ -473,6 +482,43 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     @Override
     public void onRefresh() {
         refreshWebService();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.txt_all_collection_btn:
+
+                if (collectionsType != null){
+                    EventBus.getDefault().postSticky(collectionsType);
+                    startActivity(new Intent(MainActivity.this, CollectionsActivity.class));
+                }
+                break;
+
+            case R.id.txt_new_products_all_btn:
+
+                if (newProductsType != null){
+                    EventBus.getDefault().postSticky(newProductsType);
+                    startActivity(new Intent(MainActivity.this, NewProductsActivity.class));
+                }
+                break;
+
+            case R.id.txt_all_editor_shops_btn:
+
+                if (editorShopsType != null){
+                    EventBus.getDefault().postSticky(editorShopsType);
+                    startActivity(new Intent(MainActivity.this, EditorShopsActivity.class));
+                }
+                break;
+
+            case R.id.txt_new_shops_btn:
+
+                if (newShopsType != null){
+                    EventBus.getDefault().postSticky(newShopsType);
+                    startActivity(new Intent(MainActivity.this, NewShopsActivity.class));
+                }
+                break;
+        }
     }
 }
 

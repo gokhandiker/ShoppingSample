@@ -1,28 +1,31 @@
-package com.melisa.vitrinova;
+package com.melisa.vitrinova.collections;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
 
+import com.melisa.vitrinova.R;
+import com.melisa.vitrinova.model.CollectionsType;
 import com.melisa.vitrinova.model.NewProductsType;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-public class CardSliderActivity extends AppCompatActivity {
+public class CollectionsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_card_slider);
+        setContentView(R.layout.activity_collections);
     }
 
 
-    @Subscribe(sticky = true)
-    public void onProductsReceived(NewProductsType productsType){
 
-        Log.e("onProductsReceived",productsType.getTitle());
+    @Subscribe(sticky = true)
+    public void onCollectionsReceived(CollectionsType collectionsType){
+
+        Log.e("onCollectionsReceived",collectionsType.getTitle());
     }
 
     @Override

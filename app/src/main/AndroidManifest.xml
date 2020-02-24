@@ -11,24 +11,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SearchableActivity">
-
-
-        </activity>
-        <activity android:name=".CardSliderActivity" />
-        <activity android:name=".MainActivity"
+        <activity android:name=".newshops.NewShopsActivity"></activity>
+        <activity android:name=".editorshops.EditorShopsActivity" />
+        <activity android:name=".collections.CollectionsActivity" />
+        <activity android:name=".SearchableActivity" />
+        <activity android:name=".newproducts.NewProductsActivity" />
+        <activity
+            android:name=".MainActivity"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
-                    <action android:name="android.intent.action.SEARCH" />
+                <action android:name="android.intent.action.SEARCH" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <meta-data android:name="android.app.default_searchable"
+
+            <meta-data
+                android:name="android.app.default_searchable"
                 android:value=".SearchableActivity" />
-            <meta-data android:name="android.app.searchable"
-                android:resource="@xml/searchable"/>
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
         </activity>
     </application>
 
