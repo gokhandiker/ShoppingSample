@@ -83,11 +83,9 @@ public class NewShopAdapter extends RecyclerView.Adapter<NewShopAdapter.ShopHold
 
 
 
-        if (topImageUrl!=null)
-        PicassoClient.downloadImage(activity.getApplicationContext(), topImageUrl, holder.newShopTopImage);
 
-        if (topImageUrl!=null)
-            PicassoClient.downloadImage(activity.getApplicationContext(), logoUrl, holder.newShopLogo);
+        PicassoClient.downloadImage(activity.getApplicationContext(), topImageUrl, holder.newShopTopImage);
+        PicassoClient.downloadImage(activity.getApplicationContext(), logoUrl, holder.newShopLogo);
 
 
 
