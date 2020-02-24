@@ -127,10 +127,8 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     }
 
     private void initSearchView() {
-        // Get the SearchView and set the searchable configuration
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = findViewById(R.id.search_view);
-        // Assumes current activity is the searchable activity
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
 
@@ -177,7 +175,6 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                 false);
 
         newProductsRecycler.setLayoutManager(horizontalLayoutNewProduct);
-        // Set adapter on recycler view
         newProductsRecycler.setAdapter(newProductsAdapter);
 
 
