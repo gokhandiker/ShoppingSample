@@ -35,7 +35,6 @@ public class CollectionsActivity extends AppCompatActivity {
     @Subscribe(sticky = true)
     public void onCollectionsReceived(CollectionsType collectionsType){
 
-        Log.e("onCollectionsReceived",collectionsType.getTitle());
         CollectionsAdapter productAdapter = new CollectionsAdapter(collectionsType.getCollections(), CollectionsActivity.this);
         recyclerView.setAdapter(productAdapter);
     }

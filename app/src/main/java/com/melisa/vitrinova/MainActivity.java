@@ -2,6 +2,7 @@ package com.melisa.vitrinova;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
@@ -70,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     private EditorShopsType editorShopsType;
     private NewShopsType newShopsType;
 
-    private RecyclerView newProductsRecycler, categoryRecycler, collectionsRecycler,editorShopsRecycler,newShopsRecycler;
+    private RecyclerView newProductsRecycler, categoryRecycler, collectionsRecycler, editorShopsRecycler, newShopsRecycler;
     private NewProductsAdapter newProductsAdapter;
     private CategoryAdapter categoryAdapter;
     private CollectionsAdapter collectionsAdapter;
@@ -86,11 +87,49 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     private SwipeRefreshLayout swipeRefreshLayout;
     private SearchView searchView;
 
+    private TextView txtNewProductsTitle;
+    private TextView txtCategoryTitle;
+    private TextView txtCollectionTitle;
+    private TextView txtEditorShopTitle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        client = new OkHttpClient();
+
+        setViewsAndListeners();
+        initRecyclerViewsProperties();
+        initSearchView();
+        getWebService();
+    }
+
+    private void initRecyclerViewsProperties() {
+        newProductsRecycler.setHasFixedSize(true);
+        categoryRecycler.setHasFixedSize(true);
+        collectionsRecycler.setHasFixedSize(true);
+        editorShopsRecycler.setHasFixedSize(true);
+        newShopsRecycler.setHasFixedSize(true);
+
+
+        RecyclerView.LayoutManager recyclerViewLayoutManager = new LinearLayoutManager(getApplicationContext());
+        newProductsRecycler.setLayoutManager(recyclerViewLayoutManager);
+        recyclerViewLayoutManager = new LinearLayoutManager(getApplicationContext());
+        categoryRecycler.setLayoutManager(recyclerViewLayoutManager);
+        recyclerViewLayoutManager = new LinearLayoutManager(getApplicationContext());
+        collectionsRecycler.setLayoutManager(recyclerViewLayoutManager);
+        recyclerViewLayoutManager = new LinearLayoutManager(getApplicationContext());
+        editorShopsRecycler.setLayoutManager(recyclerViewLayoutManager);
+        recyclerViewLayoutManager = new LinearLayoutManager(getApplicationContext());
+        newShopsRecycler.setLayoutManager(recyclerViewLayoutManager);
+    }
+
+    private void setViewsAndListeners() {
+        txtNewProductsTitle = findViewById(R.id.txt_editor_shop_category_title);
+        txtCategoryTitle = findViewById(R.id.txt__main_collection_title);
+        txtCollectionTitle = findViewById(R.id.txt_category_title);
+        txtEditorShopTitle = findViewById(R.id.txt_new_products_title);
         swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
         swipeRefreshLayout.setOnRefreshListener(this);
 
@@ -104,6 +143,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         editorShopsRecycler = findViewById(R.id.rv_editor_shops);
         newShopsRecycler = findViewById(R.id.rv_new_shops);
 
+
         TextView btnAllCollections = findViewById(R.id.txt_all_collection_btn);
         btnAllCollections.setOnClickListener(this);
         TextView btnNewProducts = findViewById(R.id.txt_new_products_all_btn);
@@ -113,43 +153,14 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         TextView btnNewShops = findViewById(R.id.txt_new_shops_btn);
         btnNewShops.setOnClickListener(this);
 
-
-
-        newProductsRecycler.setHasFixedSize(true);
-        categoryRecycler.setHasFixedSize(true);
-        collectionsRecycler.setHasFixedSize(true);
-        editorShopsRecycler.setHasFixedSize(true);
-        newShopsRecycler.setHasFixedSize(true);
-
-        RecyclerView.LayoutManager recyclerViewLayoutManager = new LinearLayoutManager(getApplicationContext());
-        newProductsRecycler.setLayoutManager(recyclerViewLayoutManager);
-        recyclerViewLayoutManager = new LinearLayoutManager(getApplicationContext());
-        categoryRecycler.setLayoutManager(recyclerViewLayoutManager);
-        recyclerViewLayoutManager = new LinearLayoutManager(getApplicationContext());
-        collectionsRecycler.setLayoutManager(recyclerViewLayoutManager);
-        recyclerViewLayoutManager = new LinearLayoutManager(getApplicationContext());
-        editorShopsRecycler.setLayoutManager(recyclerViewLayoutManager);
-        recyclerViewLayoutManager = new LinearLayoutManager(getApplicationContext());
-        newShopsRecycler.setLayoutManager(recyclerViewLayoutManager);
-
-
-        client = new OkHttpClient();
-
-        initSearchView();
-        getWebService();
-
-
     }
 
     private void initSearchView() {
 
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 
-
-
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
-
+        searchView.setIconifiedByDefault(false);
 
         int magId = getResources().getIdentifier("android:id/search_mag_icon", null, null);
         ImageView magImage = searchView.findViewById(magId);
@@ -167,10 +178,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         if (searchPlate != null) {
             searchPlate.setBackgroundColor(Color.TRANSPARENT);
             searchPlate.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
-
         }
-
-
     }
 
 
@@ -180,16 +188,13 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         setIntent(intent);
 
         String query = intent.getStringExtra(SearchManager.QUERY);
-        Log.e("onQueryTextChange",query);
         searchView.setQueryHint(query);
-
     }
 
     private void initNewProductsRecycler() {
-        TextView txtNewProducts = findViewById(R.id.txt_new_products_title);
 
 
-        txtNewProducts.setText(newProductsType.getTitle());
+        txtNewProductsTitle.setText(newProductsType.getTitle());
         newProductsAdapter = new NewProductsAdapter(newProductsType.getProducts(), this);
         LinearLayoutManager horizontalLayoutNewProduct = new LinearLayoutManager(
                 MainActivity.this,
@@ -198,14 +203,12 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
 
         newProductsRecycler.setLayoutManager(horizontalLayoutNewProduct);
         newProductsRecycler.setAdapter(newProductsAdapter);
-
-
     }
 
     private void initCategoryRecycler() {
-        TextView txtNewProducts = findViewById(R.id.txt_category_title);
 
-        txtNewProducts.setText(categoriesType.getTitle());
+
+        txtCategoryTitle.setText(categoriesType.getTitle());
         categoryAdapter = new CategoryAdapter(categoriesType.getCategories(), this);
         LinearLayoutManager horizontalLayoutCategory = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
 
@@ -216,9 +219,9 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     }
 
     private void initCollectionsRecycler() {
-        TextView txtNewProducts = findViewById(R.id.txt__main_collection_title);
 
-        txtNewProducts.setText(collectionsType.getTitle());
+
+        txtCollectionTitle.setText(collectionsType.getTitle());
         collectionsAdapter = new CollectionsAdapter(collectionsType.getCollections(), this);
         LinearLayoutManager horizontalLayoutCollections = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
 
@@ -229,14 +232,14 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     }
 
     private void initEditorShops() {
-        TextView txtNewProducts = findViewById(R.id.txt_editor_shop_category_title);
 
-        txtNewProducts.setText(editorShopsType.getTitle());
+
+        txtEditorShopTitle.setText(editorShopsType.getTitle());
         ImageView imgEditorShopsBg = findViewById(R.id.img_editor_shop_bg);
         setGrayScale(imgEditorShopsBg);
 
         String backgroundImageUrl = editorShopsType.getShops().get(0).getCover().getMedium().getUrl();
-        PicassoClient.downloadImage(MainActivity.this,backgroundImageUrl,imgEditorShopsBg);
+        PicassoClient.downloadImage(MainActivity.this, backgroundImageUrl, imgEditorShopsBg);
 
         editorShopAdapter = new EditorShopAdapter(editorShopsType.getShops(), this);
         HorizontalLayoutEditorShop = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
@@ -252,11 +255,11 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if(newState == RecyclerView.SCROLL_STATE_IDLE) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     View centerView = snapHelper.findSnapView(HorizontalLayoutEditorShop);
                     int position = HorizontalLayoutEditorShop.getPosition(centerView);
                     String backgroundImageUrl = editorShopsType.getShops().get(position).getCover().getMedium().getUrl();
-                    PicassoClient.downloadImage(MainActivity.this,backgroundImageUrl,imgEditorShopsBg);
+                    PicassoClient.downloadImage(MainActivity.this, backgroundImageUrl, imgEditorShopsBg);
                 }
             }
         });
@@ -279,10 +282,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     }
 
 
-
-
-    public static void  setGrayScale(ImageView ımageView)
-    {
+    public static void setGrayScale(ImageView ımageView) {
         ColorMatrix matrix = new ColorMatrix();
         matrix.setSaturation(0);
         ColorMatrixColorFilter filter = new ColorMatrixColorFilter(matrix);
@@ -339,10 +339,6 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     }
 
 
-
-
-
-
     private void getWebService() {
 
         final Request request = new Request.Builder().url("https://www.vitrinova.com/api/v2/discover").build();
@@ -354,42 +350,30 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                JSONObject featured = null;
-                JSONObject products = null;
-                JSONObject categories = null;
-                JSONObject collections = null;
-                JSONObject editorShops = null;
-                JSONObject newShops = null;
+
                 Gson gson = new Gson();
 
-                JSONArray array;
                 try {
 
-                    array = new JSONArray(response.body().string());
-                    featured = array.getJSONObject(0);
-                    products = array.getJSONObject(1);
-                    categories = array.getJSONObject(2);
-                    collections = array.getJSONObject(3);
-                    editorShops = array.getJSONObject(4);
-                    newShops = array.getJSONObject(5);
+                    JSONArray  array = new JSONArray(response.body().string());
+                    JSONObject  featured = array.getJSONObject(0);
+                    JSONObject  products = array.getJSONObject(1);
+                    JSONObject  categories = array.getJSONObject(2);
+                    JSONObject   collections = array.getJSONObject(3);
+                    JSONObject   editorShops = array.getJSONObject(4);
+                    JSONObject  newShops = array.getJSONObject(5);
 
+                    featuredType = gson.fromJson(featured.toString(), FeaturedType.class);
+                    newProductsType = gson.fromJson(products.toString(), NewProductsType.class);
+                    categoriesType = gson.fromJson(categories.toString(), CategoriesType.class);
+                    collectionsType = gson.fromJson(collections.toString(), CollectionsType.class);
+                    editorShopsType = gson.fromJson(editorShops.toString(), EditorShopsType.class);
+                    newShopsType = gson.fromJson(newShops.toString(), NewShopsType.class);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
 
-                featuredType = gson.fromJson(featured.toString(), FeaturedType.class);
-                newProductsType = gson.fromJson(products.toString(), NewProductsType.class);
-                categoriesType = gson.fromJson(categories.toString(), CategoriesType.class);
-                collectionsType = gson.fromJson(collections.toString(), CollectionsType.class);
-                editorShopsType = gson.fromJson(editorShops.toString(), EditorShopsType.class);
-                newShopsType = gson.fromJson(newShops.toString(), NewShopsType.class);
-
-
-                for (int i=0;i<editorShopsType.getShops().size();i++){
-                    Log.e("getName",editorShopsType.getShops().get(i).getName());
-                    Log.e("getDefinition",editorShopsType.getShops().get(i).getDefinition());
-                }
 
                 runOnUiThread(() -> {
                     initCarousel();
@@ -404,8 +388,8 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         });
 
 
-
     }
+
 
     private void refreshWebService() {
         client = new OkHttpClient();
@@ -418,58 +402,48 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                JSONObject featured = null;
-                JSONObject products = null;
-                JSONObject categories = null;
-                JSONObject collections = null;
-                JSONObject editorShops = null;
-                JSONObject newShops = null;
-                Gson gson = new Gson();
 
-                JSONArray array;
+                Gson gson = new Gson();
                 try {
 
-                    array = new JSONArray(response.body().string());
-                    featured = array.getJSONObject(0);
-                    products = array.getJSONObject(1);
-                    categories = array.getJSONObject(2);
-                    collections = array.getJSONObject(3);
-                    editorShops = array.getJSONObject(4);
-                    newShops = array.getJSONObject(5);
+                    JSONArray  array = new JSONArray(response.body().string());
+                    JSONObject   featured = array.getJSONObject(0);
+                    JSONObject   products = array.getJSONObject(1);
+                    JSONObject   categories = array.getJSONObject(2);
+                    JSONObject   collections = array.getJSONObject(3);
+                    JSONObject   editorShops = array.getJSONObject(4);
+                    JSONObject   newShops = array.getJSONObject(5);
 
+                    featuredType = gson.fromJson(featured.toString(), FeaturedType.class);
+                    newProductsType = gson.fromJson(products.toString(), NewProductsType.class);
+                    categoriesType = gson.fromJson(categories.toString(), CategoriesType.class);
+                    collectionsType = gson.fromJson(collections.toString(), CollectionsType.class);
+                    editorShopsType = gson.fromJson(editorShops.toString(), EditorShopsType.class);
+                    newShopsType = gson.fromJson(newShops.toString(), NewShopsType.class);
                 } catch (JSONException e) {
+                    Log.e("onResponse",e.getMessage());
                     e.printStackTrace();
                 }
 
 
-                featuredType = gson.fromJson(featured.toString(), FeaturedType.class);
-                newProductsType = gson.fromJson(products.toString(), NewProductsType.class);
-                categoriesType = gson.fromJson(categories.toString(), CategoriesType.class);
-                collectionsType = gson.fromJson(collections.toString(), CollectionsType.class);
-                editorShopsType = gson.fromJson(editorShops.toString(), EditorShopsType.class);
-                newShopsType = gson.fromJson(newShops.toString(), NewShopsType.class);
 
 
-                for (int i=0;i<editorShopsType.getShops().size();i++){
-                    Log.e("getName",editorShopsType.getShops().get(i).getName());
-                    Log.e("getDefinition",editorShopsType.getShops().get(i).getDefinition());
-                }
 
                 runOnUiThread(() -> {
 
-                    categoryAdapter = new CategoryAdapter(categoriesType.getCategories(),MainActivity.this);
+                    categoryAdapter = new CategoryAdapter(categoriesType.getCategories(), MainActivity.this);
                     categoryRecycler.setAdapter(categoryAdapter);
 
-                    newProductsAdapter = new NewProductsAdapter(newProductsType.getProducts(),MainActivity.this);
+                    newProductsAdapter = new NewProductsAdapter(newProductsType.getProducts(), MainActivity.this);
                     newProductsRecycler.setAdapter(newProductsAdapter);
 
-                    collectionsAdapter = new CollectionsAdapter(collectionsType.getCollections(),MainActivity.this);
+                    collectionsAdapter = new CollectionsAdapter(collectionsType.getCollections(), MainActivity.this);
                     collectionsRecycler.setAdapter(collectionsAdapter);
 
-                    editorShopAdapter = new EditorShopAdapter(editorShopsType.getShops(),MainActivity.this);
+                    editorShopAdapter = new EditorShopAdapter(editorShopsType.getShops(), MainActivity.this);
                     editorShopsRecycler.setAdapter(editorShopAdapter);
 
-                    newShopAdapter = new NewShopAdapter(newShopsType.getShops(),MainActivity.this);
+                    newShopAdapter = new NewShopAdapter(newShopsType.getShops(), MainActivity.this);
                     newShopsRecycler.setAdapter(newShopAdapter);
 
                     swipeRefreshLayout.setRefreshing(false);
@@ -486,10 +460,10 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.txt_all_collection_btn:
 
-                if (collectionsType != null){
+                if (collectionsType != null) {
                     EventBus.getDefault().postSticky(collectionsType);
                     startActivity(new Intent(MainActivity.this, CollectionsActivity.class));
                 }
@@ -497,7 +471,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
 
             case R.id.txt_new_products_all_btn:
 
-                if (newProductsType != null){
+                if (newProductsType != null) {
                     EventBus.getDefault().postSticky(newProductsType);
                     startActivity(new Intent(MainActivity.this, NewProductsActivity.class));
                 }
@@ -505,7 +479,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
 
             case R.id.txt_all_editor_shops_btn:
 
-                if (editorShopsType != null){
+                if (editorShopsType != null) {
                     EventBus.getDefault().postSticky(editorShopsType);
                     startActivity(new Intent(MainActivity.this, EditorShopsActivity.class));
                 }
@@ -513,7 +487,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
 
             case R.id.txt_new_shops_btn:
 
-                if (newShopsType != null){
+                if (newShopsType != null) {
                     EventBus.getDefault().postSticky(newShopsType);
                     startActivity(new Intent(MainActivity.this, NewShopsActivity.class));
                 }

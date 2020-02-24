@@ -77,7 +77,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
     private void setAnimation(View viewToAnimate, int position)
     {
-        // If the bound view wasn't previously displayed on screen, it's animated
         if (position > lastPosition)
         {
             Animation animation = AnimationUtils.loadAnimation(activity.getApplicationContext(), R.anim.slide_in_right);
@@ -86,8 +85,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         }
     }
 
-    // Override getItemCount which Returns
-    // the length of the RecyclerView.
     @Override
     public int getItemCount()
     {

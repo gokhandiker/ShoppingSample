@@ -98,7 +98,7 @@ public class NewProductsAdapter extends RecyclerView.Adapter<NewProductsAdapter.
 
     private void setAnimation(View viewToAnimate, int position)
     {
-        // If the bound view wasn't previously displayed on screen, it's animated
+
         if (position > lastPosition)
         {
             Animation animation = AnimationUtils.loadAnimation(activity.getApplicationContext(), R.anim.slide_in_right);
@@ -107,8 +107,7 @@ public class NewProductsAdapter extends RecyclerView.Adapter<NewProductsAdapter.
         }
     }
 
-    // Override getItemCount which Returns
-    // the length of the RecyclerView.
+
     @Override
     public int getItemCount()
     {
