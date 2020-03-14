@@ -11,11 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".newshops.NewShopsActivity"></activity>
-        <activity android:name=".editorshops.EditorShopsActivity" />
-        <activity android:name=".collections.CollectionsActivity" />
+        <activity android:name=".ui.newshops.NewShopsActivity"></activity>
+        <activity android:name=".ui.editorshops.EditorShopsActivity" />
+        <activity android:name=".ui.collections.CollectionsActivity" />
         <activity android:name=".SearchableActivity" />
-        <activity android:name=".newproducts.NewProductsActivity" />
+        <activity android:name=".ui.newproducts.NewProductsActivity" />
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop">
