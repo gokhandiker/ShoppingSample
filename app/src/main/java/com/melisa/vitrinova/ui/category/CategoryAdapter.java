@@ -11,7 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.melisa.vitrinova.R;
-import com.melisa.vitrinova.data.domain.CategoryBig;
+import com.melisa.vitrinova.data.model.CategoryBig;
 import com.melisa.vitrinova.ui.newproducts.PicassoClient;
 
 import java.util.List;

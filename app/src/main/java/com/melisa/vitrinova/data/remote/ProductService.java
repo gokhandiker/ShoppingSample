@@ -1,10 +1,16 @@
 package com.melisa.vitrinova.data.remote;
 
-import retrofit2.Call;
+import com.melisa.vitrinova.data.GeneralObject;
+
+import java.util.List;
+
+import io.reactivex.Single;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 
-public class ProductService {
+public interface ProductService {
 
-
+    @GET("discover")
+    @Headers("Content-type: application/json")
+    Single<List<GeneralObject>> getDiscover();
 }

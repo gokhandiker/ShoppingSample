@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.melisa.vitrinova.R;
-import com.melisa.vitrinova.data.domain.NewShopsType;
+import com.melisa.vitrinova.data.model.NewShopsType;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

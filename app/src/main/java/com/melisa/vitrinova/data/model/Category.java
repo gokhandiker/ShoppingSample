@@ -1,4 +1,4 @@
-package com.melisa.vitrinova.data.domain;
+package com.melisa.vitrinova.data.model;
 
 
 import com.google.gson.annotations.SerializedName;

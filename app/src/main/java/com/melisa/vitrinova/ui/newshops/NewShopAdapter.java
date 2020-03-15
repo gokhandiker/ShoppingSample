@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.melisa.vitrinova.R;
-import com.melisa.vitrinova.data.domain.Shop;
+import com.melisa.vitrinova.data.model.Shop;
 import com.melisa.vitrinova.ui.newproducts.PicassoClient;
 
 import java.util.List;

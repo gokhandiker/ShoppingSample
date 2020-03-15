@@ -11,7 +11,7 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.melisa.vitrinova.R;
-import com.melisa.vitrinova.data.domain.Featured;
+import com.melisa.vitrinova.data.model.Featured;
 import com.melisa.vitrinova.ui.newproducts.PicassoClient;
 
 import java.util.List;

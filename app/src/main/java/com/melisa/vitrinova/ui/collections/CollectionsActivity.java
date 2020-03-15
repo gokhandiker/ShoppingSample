@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 
 import com.melisa.vitrinova.R;
-import com.melisa.vitrinova.data.domain.CollectionsType;
+import com.melisa.vitrinova.data.model.CollectionsType;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

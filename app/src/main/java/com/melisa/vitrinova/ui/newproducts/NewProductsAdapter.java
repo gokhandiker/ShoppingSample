@@ -15,7 +15,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.melisa.vitrinova.R;
-import com.melisa.vitrinova.data.domain.NewProducts;
+import com.melisa.vitrinova.data.model.NewProducts;
 
 import java.util.List;
 
