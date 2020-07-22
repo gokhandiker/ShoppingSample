@@ -1,4 +1,4 @@
-# Vitrinova sample project for one page
+# Shopping sample project for one page
 > This project for a interview but API link doesn't work but you can examine layouts and codes.
 
 
