@@ -5,4 +5,4 @@
 
 There is sample gif how it works.
 
-<img src="https://github.com/gokhandiker/Vitrinova/blob/master/art/vitrin.gif">
+<img src="https://github.com/gokhandiker/Vitrinova/blob/master/art/vitrin.gif" style="max-width: 40%;">
